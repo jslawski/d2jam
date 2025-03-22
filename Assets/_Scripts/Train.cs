@@ -9,11 +9,15 @@ public class Train : MonoBehaviour
 
     private LineRenderer _lineRenderer;
 
-    private Transform _transform;
+    public Transform trainTransform;
+
+    private MagnetScanner _magnetScanner;
+
+    public Polarity currentPolarity = Polarity.Positive;
 
     private int _currentPositionIndex = 0;
 
-    private float _baseEngineVelocity = 2.0f;
+    private float _engineForce = 5.0f;
 
     private const float MAX_VELOCITY = 10.0f;
 
@@ -23,7 +27,8 @@ public class Train : MonoBehaviour
     {
         this._rigidbody = GetComponent<Rigidbody>();
         this._lineRenderer = GetComponentInChildren<LineRenderer>();
-        this._transform = GetComponent<Transform>();
+        this.trainTransform = GetComponent<Transform>();
+        this._magnetScanner = GetComponent<MagnetScanner>();
     }
 
     // Start is called before the first frame update
@@ -33,14 +38,21 @@ public class Train : MonoBehaviour
     }
 
     public void Launch()
-    {        
-        this._rigidbody.velocity = this._transform.up * this._baseEngineVelocity;        
+    {
+        this._rigidbody.AddForce(this.trainTransform.up * this._engineForce);
     }
 
     void FixedUpdate()
     {
-        this._rigidbody.velocity = this._transform.up * this._baseEngineVelocity;
-    
+        Vector3 magnetizedVector = this._magnetScanner.GetMagnetizedForce();
+        Vector3 engineVector = this.trainTransform.up * this._engineForce;
+
+        Vector3 finalVector = magnetizedVector + engineVector;
+
+        this._rigidbody.AddForce(finalVector);
+
+        this.trainTransform.up = this._rigidbody.velocity.normalized;
+
         if (this._rigidbody.velocity.magnitude > MAX_VELOCITY)
         {
             this._rigidbody.velocity = this._rigidbody.velocity.normalized * MAX_VELOCITY;
@@ -56,7 +68,7 @@ public class Train : MonoBehaviour
                 this._lineRenderer.positionCount++;
             }
             
-            this._lineRenderer.SetPosition(this._currentPositionIndex, this.transform.position);
+            this._lineRenderer.SetPosition(this._currentPositionIndex, this.trainTransform.position);
             this._currentPositionIndex++;
 
             yield return new WaitForSeconds(this._timeBetweenVertices);
