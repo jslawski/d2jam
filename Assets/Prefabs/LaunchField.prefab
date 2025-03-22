@@ -216,6 +216,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _rotationSpeed: 175
   _ringTransform: {fileID: 538387379454592495}
+  _launcherTransform: {fileID: 4204285317754125089}
+  _trainPrefab: {fileID: 548672327946260888, guid: 6903b9cd3eadf0c4f96d8b35158078c4,
+    type: 3}
 --- !u!114 &3509271138698056957
 MonoBehaviour:
   m_ObjectHideFlags: 0
