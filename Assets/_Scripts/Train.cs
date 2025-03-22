@@ -13,7 +13,7 @@ public class Train : MonoBehaviour
 
     private int _currentPositionIndex = 0;
 
-    private float _baseEngineVelocity = 5.0f;
+    private float _baseEngineVelocity = 2.0f;
 
     private const float MAX_VELOCITY = 10.0f;
 
@@ -38,7 +38,9 @@ public class Train : MonoBehaviour
     }
 
     void FixedUpdate()
-    {    
+    {
+        this._rigidbody.velocity = this._transform.up * this._baseEngineVelocity;
+    
         if (this._rigidbody.velocity.magnitude > MAX_VELOCITY)
         {
             this._rigidbody.velocity = this._rigidbody.velocity.normalized * MAX_VELOCITY;

@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1487109221040216857}
   - component: {fileID: 2728974954942079661}
+  - component: {fileID: 8529705462545745449}
   - component: {fileID: 4222696859745682212}
   m_Layer: 0
   m_Name: Train
@@ -47,6 +48,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ec9d070ad0156f949b5389a1481d07bd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &8529705462545745449
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 548672327946260888}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 07c9215c29c1fbf4b9c20f9cbebe22c2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _trainTransform: {fileID: 1487109221040216857}
 --- !u!54 &4222696859745682212
 Rigidbody:
   m_ObjectHideFlags: 0
