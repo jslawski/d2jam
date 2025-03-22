@@ -59,6 +59,7 @@ public class LaunchField : MonoBehaviour
 
     private void RotateClockwise()
     {
+        Debug.LogError("Clockwise");
         this._ringTransform.localRotation = Quaternion.Euler(0.0f, 0.0f, this._ringTransform.localRotation.eulerAngles.z - (this._rotationSpeed * Time.deltaTime));
     }
 
