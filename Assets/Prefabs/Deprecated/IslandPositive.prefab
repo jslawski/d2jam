@@ -9,6 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 786599891054444228}
+  - component: {fileID: 1511991655631734552}
   m_Layer: 0
   m_Name: IslandPositive
   m_TagString: Untagged
@@ -32,6 +33,19 @@ Transform:
   - {fileID: 636509590959232601}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1511991655631734552
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5593926371944412372}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4b7a56e147537ee429665a400da93616, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  polarity: 0
 --- !u!1001 &1107867249353191858
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -143,10 +157,6 @@ PrefabInstance:
         type: 3}
       insertIndex: -1
       addedObject: {fileID: 7899047398740677080}
-    - targetCorrespondingSourceObject: {fileID: 1465694168443398776, guid: 57be8fb07a6ea064392d2b3e39bdd0f5,
-        type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 1524252368734458976}
   m_SourcePrefab: {fileID: 100100000, guid: 57be8fb07a6ea064392d2b3e39bdd0f5, type: 3}
 --- !u!4 &636509590959232601 stripped
 Transform:
@@ -182,16 +192,3 @@ MeshCollider:
   m_Convex: 0
   m_CookingOptions: 30
   m_Mesh: {fileID: 9023955764063960635, guid: 57be8fb07a6ea064392d2b3e39bdd0f5, type: 3}
---- !u!114 &1524252368734458976
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1948051411934796746}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4b7a56e147537ee429665a400da93616, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  polarity: 0

@@ -40,21 +40,45 @@ public class MagnetScanner : MonoBehaviour
         */
         for (int i = 0; i < this._currentMagnets.Count; i++)
         {
-            Magnet magnetComponent = this._currentMagnets[i].collider.gameObject.GetComponent<Magnet>();
+            Magnet magnetComponent = this.GetMagnetComponent(this._currentMagnets[i].collider.gameObject);
             if (this._train.currentPolarity == magnetComponent.polarity)
             {
-                totalForceVector -= this._currentMagnets[i].normal.normalized * this.CalculateMagnetForce(magnetComponent.magnetForce, this._currentMagnets[i].point);
+                totalForceVector -= this._currentMagnets[i].normal.normalized * this.CalculateMagnetForce(this._currentMagnets[i].point);
             }
             else
             {
-                totalForceVector += this._currentMagnets[i].normal.normalized * this.CalculateMagnetForce(magnetComponent.magnetForce, this._currentMagnets[i].point);
+                totalForceVector += this._currentMagnets[i].normal.normalized * this.CalculateMagnetForce(this._currentMagnets[i].point);
             }            
         }
 
         return totalForceVector;
     }
 
-    private float CalculateMagnetForce(float magnetForce, Vector3 impactPoint)
+    private Magnet GetMagnetComponent(GameObject magnetObject)
+    {
+        if (magnetObject == null)
+        {
+            return null;
+        }
+    
+        Magnet returnMagnet = magnetObject.GetComponent<Magnet>();
+
+        if (returnMagnet == null)
+        {
+            if (magnetObject.transform.parent != null)
+            {
+                return this.GetMagnetComponent(magnetObject.transform.parent.gameObject);
+            }
+        }
+        else
+        {
+            return returnMagnet;
+        }
+
+        return null;
+    }
+
+    private float CalculateMagnetForce(Vector3 impactPoint)
     {
         float forceDistance = Vector3.Distance(impactPoint, this._train.trainTransform.position);
         float forceT = forceDistance / GlobalVariables.RAYCAST_DISTANCE;

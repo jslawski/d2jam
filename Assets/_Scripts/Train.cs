@@ -38,7 +38,6 @@ public class Train : MonoBehaviour
 
     public void EnableControls()
     {
-        //ControlsManager.AddPerformedAction(ControlsManager.GetPlayerMapActions().Launch, this.ChangePolarity);
         ControlsManager.AddPerformedAction(ControlsManager.GetPlayerMapActions().PositivePolarity, this.ChangeToPositive);
         ControlsManager.AddPerformedAction(ControlsManager.GetPlayerMapActions().NegativePolarity, this.ChangeToNegative);
 

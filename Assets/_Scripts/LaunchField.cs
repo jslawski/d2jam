@@ -77,8 +77,6 @@ public class LaunchField : MonoBehaviour
         {
             this.RotateToMousePosition();
         }
-
-        Debug.LogError("Mouse Rotation: " + GlobalVariables.MOUSE_ROTATION);
     }
 
     private void FixedUpdate()
