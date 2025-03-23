@@ -53,6 +53,33 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Restart"",
+                    ""type"": ""Button"",
+                    ""id"": ""e5f9608c-c3f1-4d00-873b-c4e141efad5d"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""PositivePolarity"",
+                    ""type"": ""Button"",
+                    ""id"": ""5d4a5e33-9290-4a9d-9abe-225378966b1a"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""NegativePolarity"",
+                    ""type"": ""Button"",
+                    ""id"": ""7bd0dd8e-c9eb-4a16-8012-c06a5f17d908"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -60,6 +87,17 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
                     ""name"": """",
                     ""id"": ""d6367a4e-d678-428d-a80c-0ce1e2440430"",
                     ""path"": ""<Keyboard>/a"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Left"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""ccc99e8f-e550-49a3-87d9-8eab19f5e54f"",
+                    ""path"": ""<Keyboard>/leftArrow"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
@@ -80,12 +118,56 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
                 },
                 {
                     ""name"": """",
+                    ""id"": ""3cb76d86-5126-409b-9234-9a600d89400b"",
+                    ""path"": ""<Keyboard>/rightArrow"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Right"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
                     ""id"": ""2c493b17-da50-4a73-9dda-8855a750b800"",
                     ""path"": ""<Keyboard>/space"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
                     ""action"": ""Launch"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""2fe563dc-19f7-4378-9f4b-dbdaf7cc8389"",
+                    ""path"": ""<Keyboard>/r"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Restart"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""2eb57c40-718f-4725-a213-3e07c29be4d3"",
+                    ""path"": ""<Mouse>/leftButton"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""PositivePolarity"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""4cc32f01-9336-4ce4-b275-40974c8cd022"",
+                    ""path"": ""<Mouse>/rightButton"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""NegativePolarity"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -99,6 +181,9 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
         m_PlayerMap_Left = m_PlayerMap.FindAction("Left", throwIfNotFound: true);
         m_PlayerMap_Right = m_PlayerMap.FindAction("Right", throwIfNotFound: true);
         m_PlayerMap_Launch = m_PlayerMap.FindAction("Launch", throwIfNotFound: true);
+        m_PlayerMap_Restart = m_PlayerMap.FindAction("Restart", throwIfNotFound: true);
+        m_PlayerMap_PositivePolarity = m_PlayerMap.FindAction("PositivePolarity", throwIfNotFound: true);
+        m_PlayerMap_NegativePolarity = m_PlayerMap.FindAction("NegativePolarity", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -163,6 +248,9 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
     private readonly InputAction m_PlayerMap_Left;
     private readonly InputAction m_PlayerMap_Right;
     private readonly InputAction m_PlayerMap_Launch;
+    private readonly InputAction m_PlayerMap_Restart;
+    private readonly InputAction m_PlayerMap_PositivePolarity;
+    private readonly InputAction m_PlayerMap_NegativePolarity;
     public struct PlayerMapActions
     {
         private @PlayerControls m_Wrapper;
@@ -170,6 +258,9 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
         public InputAction @Left => m_Wrapper.m_PlayerMap_Left;
         public InputAction @Right => m_Wrapper.m_PlayerMap_Right;
         public InputAction @Launch => m_Wrapper.m_PlayerMap_Launch;
+        public InputAction @Restart => m_Wrapper.m_PlayerMap_Restart;
+        public InputAction @PositivePolarity => m_Wrapper.m_PlayerMap_PositivePolarity;
+        public InputAction @NegativePolarity => m_Wrapper.m_PlayerMap_NegativePolarity;
         public InputActionMap Get() { return m_Wrapper.m_PlayerMap; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -188,6 +279,15 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
             @Launch.started += instance.OnLaunch;
             @Launch.performed += instance.OnLaunch;
             @Launch.canceled += instance.OnLaunch;
+            @Restart.started += instance.OnRestart;
+            @Restart.performed += instance.OnRestart;
+            @Restart.canceled += instance.OnRestart;
+            @PositivePolarity.started += instance.OnPositivePolarity;
+            @PositivePolarity.performed += instance.OnPositivePolarity;
+            @PositivePolarity.canceled += instance.OnPositivePolarity;
+            @NegativePolarity.started += instance.OnNegativePolarity;
+            @NegativePolarity.performed += instance.OnNegativePolarity;
+            @NegativePolarity.canceled += instance.OnNegativePolarity;
         }
 
         private void UnregisterCallbacks(IPlayerMapActions instance)
@@ -201,6 +301,15 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
             @Launch.started -= instance.OnLaunch;
             @Launch.performed -= instance.OnLaunch;
             @Launch.canceled -= instance.OnLaunch;
+            @Restart.started -= instance.OnRestart;
+            @Restart.performed -= instance.OnRestart;
+            @Restart.canceled -= instance.OnRestart;
+            @PositivePolarity.started -= instance.OnPositivePolarity;
+            @PositivePolarity.performed -= instance.OnPositivePolarity;
+            @PositivePolarity.canceled -= instance.OnPositivePolarity;
+            @NegativePolarity.started -= instance.OnNegativePolarity;
+            @NegativePolarity.performed -= instance.OnNegativePolarity;
+            @NegativePolarity.canceled -= instance.OnNegativePolarity;
         }
 
         public void RemoveCallbacks(IPlayerMapActions instance)
@@ -223,5 +332,8 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
         void OnLeft(InputAction.CallbackContext context);
         void OnRight(InputAction.CallbackContext context);
         void OnLaunch(InputAction.CallbackContext context);
+        void OnRestart(InputAction.CallbackContext context);
+        void OnPositivePolarity(InputAction.CallbackContext context);
+        void OnNegativePolarity(InputAction.CallbackContext context);
     }
 }

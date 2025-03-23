@@ -5,8 +5,6 @@ using UnityEngine.InputSystem;
 
 public class LaunchField : MonoBehaviour
 {
-    private PlayerControls _playerControls;
-
     [SerializeField]
     private float _rotationSpeed = 25f;
 
@@ -19,39 +17,49 @@ public class LaunchField : MonoBehaviour
     [SerializeField]
     private GameObject _trainPrefab;
 
-    private GameObject _currentTrainInstance;
+    private bool _controlsDisabled = false;
+
+    [SerializeField]
+    private Transform _worldTransform;
 
     private void Awake()
     {
-        this._playerControls = new PlayerControls();
-
-        this._playerControls.PlayerMap.Launch.performed += this.LaunchTrain;
+        ControlsManager.Setup();
+        this.EnableControls();
     }    
-
-    private void OnEnable()
-    {
-        this._playerControls.Enable();
-    }
 
     private void OnDisable()
     {
-        this._playerControls.Disable();
+        ControlsManager.Cleanup();
     }
 
-    // Start is called before the first frame update
-    void Start()
+    public void EnableControls()
     {
-        
+        ControlsManager.AddPerformedAction(ControlsManager.GetPlayerMapActions().PositivePolarity, this.LaunchPositive);
+        ControlsManager.AddPerformedAction(ControlsManager.GetPlayerMapActions().NegativePolarity, this.LaunchNegative);
+        this._controlsDisabled = false;
+    }
+
+    public void DisableControls()
+    {
+        ControlsManager.RemovePerformedAction(ControlsManager.GetPlayerMapActions().PositivePolarity, this.LaunchPositive);
+        ControlsManager.RemovePerformedAction(ControlsManager.GetPlayerMapActions().NegativePolarity, this.LaunchNegative);
+        this._controlsDisabled = true;
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (this._playerControls.PlayerMap.Left.inProgress == true)
+        if (this._controlsDisabled == true)
+        {
+            return;
+        }
+    
+        if (ControlsManager.IsInProgress(ControlsManager.GetPlayerMapActions().Left) == true)
         {
             this.RotateClockwise();
         }
-        else if (this._playerControls.PlayerMap.Right.inProgress == true)
+        else if (ControlsManager.IsInProgress(ControlsManager.GetPlayerMapActions().Right) == true)
         {
             this.RotateCounterClockwise();
         }
@@ -67,19 +75,21 @@ public class LaunchField : MonoBehaviour
         this._ringTransform.localRotation = Quaternion.Euler(0.0f, 0.0f, this._ringTransform.localRotation.eulerAngles.z + (this._rotationSpeed * Time.deltaTime));
     }
 
-    private void LaunchTrain(InputAction.CallbackContext context)
+    private void LaunchPositive(InputAction.CallbackContext context)
     {
-        this.GenerateTrain();
-
-        if (this._currentTrainInstance == null)
-        {
-            
-        }
+        this.GenerateTrain(Polarity.Positive);
+        this.DisableControls();
     }
 
-    private void GenerateTrain()
+    private void LaunchNegative(InputAction.CallbackContext context)
     {
-        this._currentTrainInstance = Instantiate(this._trainPrefab, this._launcherTransform.position, this._ringTransform.rotation);
-        this._currentTrainInstance.GetComponent<Train>().Launch();
+        this.GenerateTrain(Polarity.Negative);
+        this.DisableControls();
+    }
+
+    private void GenerateTrain(Polarity initialPolarity)
+    {
+        GameObject currentTrainInstance = Instantiate(this._trainPrefab, this._launcherTransform.position, this._ringTransform.rotation);
+        currentTrainInstance.GetComponent<Train>().Launch(this, initialPolarity);
     }
 }

@@ -2,6 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Runtime.CompilerServices;
 using UnityEngine;
+using UnityEngine.InputSystem;
+using UnityEngine.SceneManagement;
 
 public class Train : MonoBehaviour
 {
@@ -17,11 +19,13 @@ public class Train : MonoBehaviour
 
     private int _currentPositionIndex = 0;
 
-    private float _engineForce = 5.0f;
-
-    private const float MAX_VELOCITY = 10.0f;
-
     private float _timeBetweenVertices = 0.02f;
+
+    [SerializeField]
+    private LaunchField _launchField;
+
+    [SerializeField]
+    private SpriteRenderer _sprite;
 
     private void Awake()
     {
@@ -29,6 +33,21 @@ public class Train : MonoBehaviour
         this._lineRenderer = GetComponentInChildren<LineRenderer>();
         this.trainTransform = GetComponent<Transform>();
         this._magnetScanner = GetComponent<MagnetScanner>();
+
+    }
+
+    public void EnableControls()
+    {
+        //ControlsManager.AddPerformedAction(ControlsManager.GetPlayerMapActions().Launch, this.ChangePolarity);
+        ControlsManager.AddPerformedAction(ControlsManager.GetPlayerMapActions().PositivePolarity, this.ChangeToPositive);
+        ControlsManager.AddPerformedAction(ControlsManager.GetPlayerMapActions().NegativePolarity, this.ChangeToNegative);
+
+    }
+
+    public void DisableControls()
+    {
+        ControlsManager.RemovePerformedAction(ControlsManager.GetPlayerMapActions().PositivePolarity, this.ChangeToPositive);
+        ControlsManager.RemovePerformedAction(ControlsManager.GetPlayerMapActions().NegativePolarity, this.ChangeToNegative);
     }
 
     // Start is called before the first frame update
@@ -37,15 +56,26 @@ public class Train : MonoBehaviour
         StartCoroutine(this.UpdateLineRenderer());           
     }
 
-    public void Launch()
+    public void Launch(LaunchField launcher, Polarity initialPolarity)
     {
-        this._rigidbody.AddForce(this.trainTransform.up * this._engineForce);
+        this._rigidbody.AddForce(this.trainTransform.up * GlobalVariables.ENGINE_FORCE);
+        this._launchField = launcher;
+        this.EnableControls();
+
+        if (initialPolarity == Polarity.Positive)
+        {
+            this.ChangeToPositive(new InputAction.CallbackContext());
+        }
+        else if (initialPolarity == Polarity.Negative)
+        {
+            this.ChangeToNegative(new InputAction.CallbackContext());
+        }
     }
 
     void FixedUpdate()
     {
         Vector3 magnetizedVector = this._magnetScanner.GetMagnetizedForce();
-        Vector3 engineVector = this.trainTransform.up * this._engineForce;
+        Vector3 engineVector = this.trainTransform.up * GlobalVariables.ENGINE_FORCE;
 
         Vector3 finalVector = magnetizedVector + engineVector;
 
@@ -53,9 +83,9 @@ public class Train : MonoBehaviour
 
         this.trainTransform.up = this._rigidbody.velocity.normalized;
 
-        if (this._rigidbody.velocity.magnitude > MAX_VELOCITY)
+        if (this._rigidbody.velocity.magnitude > GlobalVariables.MAX_VELOCITY)
         {
-            this._rigidbody.velocity = this._rigidbody.velocity.normalized * MAX_VELOCITY;
+            this._rigidbody.velocity = this._rigidbody.velocity.normalized * GlobalVariables.MAX_VELOCITY;
         }
     }
 
@@ -72,6 +102,29 @@ public class Train : MonoBehaviour
             this._currentPositionIndex++;
 
             yield return new WaitForSeconds(this._timeBetweenVertices);
+        }
+    }
+
+    private void ChangeToPositive(InputAction.CallbackContext context)
+    {
+        this.currentPolarity = Polarity.Positive;
+        this._sprite.color = Color.red;
+    }
+
+    private void ChangeToNegative(InputAction.CallbackContext context)
+    {
+        this.currentPolarity = Polarity.Negative;
+        this._sprite.color = Color.blue;
+    }
+
+    private void OnCollisionEnter(Collision collision)
+    {
+        if (collision.collider.tag == "Killzone")
+        {
+            this.DisableControls();
+            this._launchField.EnableControls();
+
+            Destroy(this.gameObject);
         }
     }
 }
