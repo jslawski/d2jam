@@ -61,15 +61,24 @@ public class LaunchField : MonoBehaviour
         {
             return;
         }
-    
-        if (ControlsManager.IsInProgress(ControlsManager.GetPlayerMapActions().Left) == true)
+
+        if (GlobalVariables.MOUSE_ROTATION == false)
         {
-            this.RotateClockwise();
+            if (ControlsManager.IsInProgress(ControlsManager.GetPlayerMapActions().Left) == true)
+            {
+                this.RotateClockwise();
+            }
+            else if (ControlsManager.IsInProgress(ControlsManager.GetPlayerMapActions().Right) == true)
+            {
+                this.RotateCounterClockwise();
+            }
         }
-        else if (ControlsManager.IsInProgress(ControlsManager.GetPlayerMapActions().Right) == true)
+        else
         {
-            this.RotateCounterClockwise();
+            this.RotateToMousePosition();
         }
+
+        Debug.LogError("Mouse Rotation: " + GlobalVariables.MOUSE_ROTATION);
     }
 
     private void FixedUpdate()
@@ -119,5 +128,12 @@ public class LaunchField : MonoBehaviour
     private void ResetCurrentSpeed(InputAction.CallbackContext context)
     {
         this._currentRotationSpeed = 0.0f;
+    }
+
+    private void RotateToMousePosition()
+    {
+        Vector3 directionVector = Camera.main.ScreenToViewportPoint(Input.mousePosition) - (Vector3.one * 0.5f);
+
+        this._ringTransform.up = new Vector3(-directionVector.x, -directionVector.y);
     }
 }
