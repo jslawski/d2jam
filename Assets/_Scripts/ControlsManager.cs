@@ -1,7 +1,6 @@
 using UnityEngine.InputSystem;
 using UnityEngine.SceneManagement;
 
-
 public static class ControlsManager
 {
     private static PlayerControls playerControls;

@@ -46,15 +46,6 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
                     ""initialStateCheck"": false
                 },
                 {
-                    ""name"": ""Launch"",
-                    ""type"": ""Button"",
-                    ""id"": ""986df1ce-82ec-4e80-b77c-c256ca5d8d36"",
-                    ""expectedControlType"": ""Button"",
-                    ""processors"": """",
-                    ""interactions"": """",
-                    ""initialStateCheck"": false
-                },
-                {
                     ""name"": ""Restart"",
                     ""type"": ""Button"",
                     ""id"": ""e5f9608c-c3f1-4d00-873b-c4e141efad5d"",
@@ -129,17 +120,6 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
                 },
                 {
                     ""name"": """",
-                    ""id"": ""2c493b17-da50-4a73-9dda-8855a750b800"",
-                    ""path"": ""<Keyboard>/space"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""Launch"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
                     ""id"": ""2fe563dc-19f7-4378-9f4b-dbdaf7cc8389"",
                     ""path"": ""<Keyboard>/r"",
                     ""interactions"": """",
@@ -162,8 +142,74 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
                 },
                 {
                     ""name"": """",
+                    ""id"": ""93a592c3-5988-4fc5-8a3b-63dd465bbf8e"",
+                    ""path"": ""<Keyboard>/q"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""PositivePolarity"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""0237c433-e6b1-4f89-99e2-6b4f8db7c784"",
+                    ""path"": ""<Keyboard>/w"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""PositivePolarity"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""825deb4f-fb40-478c-9b24-2154cf988430"",
+                    ""path"": ""<Keyboard>/upArrow"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""PositivePolarity"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
                     ""id"": ""4cc32f01-9336-4ce4-b275-40974c8cd022"",
                     ""path"": ""<Mouse>/rightButton"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""NegativePolarity"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""f5b19e3a-945f-4842-bd64-f2c2063fca9e"",
+                    ""path"": ""<Keyboard>/e"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""NegativePolarity"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""30572943-c8b9-46ac-ab70-327c3824d91a"",
+                    ""path"": ""<Keyboard>/s"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""NegativePolarity"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""f53a05d4-ec80-4161-855d-aeb052d2e6f6"",
+                    ""path"": ""<Keyboard>/downArrow"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
@@ -180,7 +226,6 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
         m_PlayerMap = asset.FindActionMap("PlayerMap", throwIfNotFound: true);
         m_PlayerMap_Left = m_PlayerMap.FindAction("Left", throwIfNotFound: true);
         m_PlayerMap_Right = m_PlayerMap.FindAction("Right", throwIfNotFound: true);
-        m_PlayerMap_Launch = m_PlayerMap.FindAction("Launch", throwIfNotFound: true);
         m_PlayerMap_Restart = m_PlayerMap.FindAction("Restart", throwIfNotFound: true);
         m_PlayerMap_PositivePolarity = m_PlayerMap.FindAction("PositivePolarity", throwIfNotFound: true);
         m_PlayerMap_NegativePolarity = m_PlayerMap.FindAction("NegativePolarity", throwIfNotFound: true);
@@ -247,7 +292,6 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
     private List<IPlayerMapActions> m_PlayerMapActionsCallbackInterfaces = new List<IPlayerMapActions>();
     private readonly InputAction m_PlayerMap_Left;
     private readonly InputAction m_PlayerMap_Right;
-    private readonly InputAction m_PlayerMap_Launch;
     private readonly InputAction m_PlayerMap_Restart;
     private readonly InputAction m_PlayerMap_PositivePolarity;
     private readonly InputAction m_PlayerMap_NegativePolarity;
@@ -257,7 +301,6 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
         public PlayerMapActions(@PlayerControls wrapper) { m_Wrapper = wrapper; }
         public InputAction @Left => m_Wrapper.m_PlayerMap_Left;
         public InputAction @Right => m_Wrapper.m_PlayerMap_Right;
-        public InputAction @Launch => m_Wrapper.m_PlayerMap_Launch;
         public InputAction @Restart => m_Wrapper.m_PlayerMap_Restart;
         public InputAction @PositivePolarity => m_Wrapper.m_PlayerMap_PositivePolarity;
         public InputAction @NegativePolarity => m_Wrapper.m_PlayerMap_NegativePolarity;
@@ -276,9 +319,6 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
             @Right.started += instance.OnRight;
             @Right.performed += instance.OnRight;
             @Right.canceled += instance.OnRight;
-            @Launch.started += instance.OnLaunch;
-            @Launch.performed += instance.OnLaunch;
-            @Launch.canceled += instance.OnLaunch;
             @Restart.started += instance.OnRestart;
             @Restart.performed += instance.OnRestart;
             @Restart.canceled += instance.OnRestart;
@@ -298,9 +338,6 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
             @Right.started -= instance.OnRight;
             @Right.performed -= instance.OnRight;
             @Right.canceled -= instance.OnRight;
-            @Launch.started -= instance.OnLaunch;
-            @Launch.performed -= instance.OnLaunch;
-            @Launch.canceled -= instance.OnLaunch;
             @Restart.started -= instance.OnRestart;
             @Restart.performed -= instance.OnRestart;
             @Restart.canceled -= instance.OnRestart;
@@ -331,7 +368,6 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
     {
         void OnLeft(InputAction.CallbackContext context);
         void OnRight(InputAction.CallbackContext context);
-        void OnLaunch(InputAction.CallbackContext context);
         void OnRestart(InputAction.CallbackContext context);
         void OnPositivePolarity(InputAction.CallbackContext context);
         void OnNegativePolarity(InputAction.CallbackContext context);
