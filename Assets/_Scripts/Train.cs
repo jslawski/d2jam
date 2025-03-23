@@ -52,7 +52,7 @@ public class Train : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        StartCoroutine(this.UpdateLineRenderer());           
+        StartCoroutine(this.UpdateLineRenderer());
     }
 
     public void Launch(LaunchField launcher, Polarity initialPolarity)
@@ -69,6 +69,8 @@ public class Train : MonoBehaviour
         {
             this.ChangeToNegative(new InputAction.CallbackContext());
         }
+
+        ScoreManager.instance.ResetCurrentScore();
     }
 
     void FixedUpdate()
@@ -86,6 +88,8 @@ public class Train : MonoBehaviour
         {
             this._rigidbody.velocity = this._rigidbody.velocity.normalized * GlobalVariables.MAX_VELOCITY;
         }
+
+        ScoreManager.instance.IncrementTimer();
     }
 
     private IEnumerator UpdateLineRenderer()
@@ -98,6 +102,15 @@ public class Train : MonoBehaviour
             }
             
             this._lineRenderer.SetPosition(this._currentPositionIndex, this.trainTransform.position);
+
+            if (this._currentPositionIndex != 0)
+            {
+                Vector3 previousPosition = this._lineRenderer.GetPosition(this._currentPositionIndex - 1);
+                Vector3 currentPosition = this._lineRenderer.GetPosition(this._currentPositionIndex);
+                float incrementalDistance = Vector3.Distance(previousPosition, currentPosition);
+                ScoreManager.instance.IncrementDistanceTravelled(incrementalDistance);
+            }
+
             this._currentPositionIndex++;
 
             yield return new WaitForSeconds(this._timeBetweenVertices);
@@ -123,7 +136,14 @@ public class Train : MonoBehaviour
             this.DisableControls();
             this._launchField.EnableControls();
 
+            ScoreManager.instance.ResetCurrentScore();
+
             Destroy(this.gameObject);
         }
+    }
+
+    private void OnDestroy()
+    {
+        CollectibleManager.instance.ResetCollectibles();
     }
 }
