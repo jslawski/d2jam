@@ -574,15 +574,15 @@ PrefabInstance:
       propertyPath: m_Name
       value: LevelSelectCanvas
       objectReference: {fileID: 0}
-    - target: {fileID: 7958380772160905066, guid: cdc5f1029c9a739428b21526b6e0e955,
+    - target: {fileID: 7673515540788508399, guid: cdc5f1029c9a739428b21526b6e0e955,
         type: 3}
-      propertyPath: m_HorizontalScrollbar
-      value: 
+      propertyPath: m_Value
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8559057171819603096, guid: cdc5f1029c9a739428b21526b6e0e955,
         type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: -0.00024959564
+      value: -0.00067277387
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
