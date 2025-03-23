@@ -5,8 +5,11 @@ using UnityEngine.InputSystem;
 
 public class LaunchField : MonoBehaviour
 {
-    [SerializeField]
-    private float _rotationSpeed = 25f;
+    private float _maxRotationSpeed = 175f;
+
+    private float _currentRotationSpeed = 0.0f;
+
+    private float _accelerationPerFrame = 35f;
 
     [SerializeField]
     private Transform _ringTransform;
@@ -20,7 +23,7 @@ public class LaunchField : MonoBehaviour
     private bool _controlsDisabled = false;
 
     [SerializeField]
-    private Transform _worldTransform;
+    private Transform _worldTransform;    
 
     private void Awake()
     {
@@ -37,6 +40,8 @@ public class LaunchField : MonoBehaviour
     {
         ControlsManager.AddPerformedAction(ControlsManager.GetPlayerMapActions().PositivePolarity, this.LaunchPositive);
         ControlsManager.AddPerformedAction(ControlsManager.GetPlayerMapActions().NegativePolarity, this.LaunchNegative);
+        ControlsManager.AddPerformedAction(ControlsManager.GetPlayerMapActions().Left, this.ResetCurrentSpeed);
+        ControlsManager.AddPerformedAction(ControlsManager.GetPlayerMapActions().Right, this.ResetCurrentSpeed);
         this._controlsDisabled = false;
     }
 
@@ -44,6 +49,8 @@ public class LaunchField : MonoBehaviour
     {
         ControlsManager.RemovePerformedAction(ControlsManager.GetPlayerMapActions().PositivePolarity, this.LaunchPositive);
         ControlsManager.RemovePerformedAction(ControlsManager.GetPlayerMapActions().NegativePolarity, this.LaunchNegative);
+        ControlsManager.RemovePerformedAction(ControlsManager.GetPlayerMapActions().Left, this.ResetCurrentSpeed);
+        ControlsManager.RemovePerformedAction(ControlsManager.GetPlayerMapActions().Right, this.ResetCurrentSpeed);
         this._controlsDisabled = true;
     }
 
@@ -65,14 +72,30 @@ public class LaunchField : MonoBehaviour
         }
     }
 
-    private void RotateClockwise()
+    private void FixedUpdate()
     {
-        this._ringTransform.localRotation = Quaternion.Euler(0.0f, 0.0f, this._ringTransform.localRotation.eulerAngles.z - (this._rotationSpeed * Time.deltaTime));
+        if (ControlsManager.IsInProgress(ControlsManager.GetPlayerMapActions().Left) == true || ControlsManager.IsInProgress(ControlsManager.GetPlayerMapActions().Right) == true)
+        {
+            this.AccelerateRotation();
+        }        
+    }
+
+    private void AccelerateRotation()
+    {
+        if (this._currentRotationSpeed < this._maxRotationSpeed)
+        {
+            this._currentRotationSpeed += this._accelerationPerFrame;
+        }
+    }
+
+    private void RotateClockwise()
+    {    
+        this._ringTransform.localRotation = Quaternion.Euler(0.0f, 0.0f, this._ringTransform.localRotation.eulerAngles.z - (this._currentRotationSpeed * Time.deltaTime));
     }
 
     private void RotateCounterClockwise()
     {
-        this._ringTransform.localRotation = Quaternion.Euler(0.0f, 0.0f, this._ringTransform.localRotation.eulerAngles.z + (this._rotationSpeed * Time.deltaTime));
+        this._ringTransform.localRotation = Quaternion.Euler(0.0f, 0.0f, this._ringTransform.localRotation.eulerAngles.z + (this._currentRotationSpeed * Time.deltaTime));
     }
 
     private void LaunchPositive(InputAction.CallbackContext context)
@@ -91,5 +114,10 @@ public class LaunchField : MonoBehaviour
     {
         GameObject currentTrainInstance = Instantiate(this._trainPrefab, this._launcherTransform.position, this._ringTransform.rotation);
         currentTrainInstance.GetComponent<Train>().Launch(this, initialPolarity);
+    }
+
+    private void ResetCurrentSpeed(InputAction.CallbackContext context)
+    {
+        this._currentRotationSpeed = 0.0f;
     }
 }
