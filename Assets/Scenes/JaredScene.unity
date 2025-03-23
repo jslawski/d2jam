@@ -157,8 +157,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -664.0449, y: 229.22351}
-  m_SizeDelta: {x: 469.91, y: 587.5524}
+  m_AnchoredPosition: {x: -741.7405, y: 235}
+  m_SizeDelta: {x: 412.1544, y: 587.5524}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &205002074
 MonoBehaviour:
@@ -180,17 +180,31 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 'CONTROLS:
+  m_text: '<b>CONTROLS:</b>
 
 
-    A/D/Left/Right: Rotate Ship
+    <b>D/Right:</b>
+
+    Rotate Clockwise
 
 
-    LMB/RMB: Launch Train
+    <b>A/Left</b>
+
+    Rotate
+    Counter-Clockwise
 
 
-    LMB/RMB:
-    Change Polarity'
+    <b>LMB/Q/W/Up:</b>
+
+    Launch/Change Positive
+
+
+    <b>RMB/S/E/Down:</b>
+
+    Launch/Change
+    Negative
+
+'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
