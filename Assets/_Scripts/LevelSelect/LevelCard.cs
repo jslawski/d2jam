@@ -24,8 +24,42 @@ public class LevelCard : MonoBehaviour
 
         this._levelImage.sprite = Resources.Load<Sprite>("LevelImages/" + setupLevel.imageFileName);
 
-        //Try to grab player's leaderboard stats here.  If nothing exists, then mark the level as "unbeaten"
-        //If it does exist, then update the player's leaderboard position and score
+        this.GetLatestHighscoreValues();
+    }
+
+    private void GetLatestHighscoreValues()
+    {
+        string playerName = PlayerPrefs.GetString("username", "");
+        GetCabbageLeaderboardEntryAsyncRequest request = new GetCabbageLeaderboardEntryAsyncRequest(playerName, this._associatedLevel.sceneName, this.GetDataSuccess, this.GetDataFailure);
+        request.Send();
+    }
+
+    private void GetDataSuccess(string data)
+    {
+        //Empty leaderboard, return
+        if (data == "[]")
+        {
+            return;
+        }
+
+        LeaderboardEntryData leaderboardEntry = JsonUtility.FromJson<LeaderboardEntryData>(data);
+
+        if (leaderboardEntry.value == 0)
+        {
+            this._leaderboardPositionText.text = "--";
+            this._playerScoreText.text = "Unbeaten";
+        }
+        else
+        {
+            this._leaderboardPositionText.text = leaderboardEntry.placement.ToString();
+            this._playerScoreText.text = leaderboardEntry.value.ToString();
+        }
+    }
+
+    private void GetDataFailure()
+    {
+        this._leaderboardPositionText.text = "--";
+        this._leaderboardPositionText.text = "Unbeaten";
     }
 
     public void SelectLevel()
