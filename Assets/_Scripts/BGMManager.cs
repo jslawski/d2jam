@@ -33,12 +33,16 @@ public class BGMManager : MonoBehaviour
 
     public void FadeToGameplayBGM()
     {
+        this.menuBGM.DOKill();
+        this.gameplayBGM.DOKill();
         this.menuBGM.DOFade(0.0f, this._timeToFade).SetEase(Ease.Linear);
         this.gameplayBGM.DOFade(1.0f, this._timeToFade).SetEase(Ease.Linear);
     }
 
     public void FadeToMenuBGM()
     {
+        this.menuBGM.DOKill();
+        this.gameplayBGM.DOKill();
         this.menuBGM.DOFade(1.0f, this._timeToFade).SetEase(Ease.Linear);
         this.gameplayBGM.DOFade(0.0f, this._timeToFade).SetEase(Ease.Linear);
     }

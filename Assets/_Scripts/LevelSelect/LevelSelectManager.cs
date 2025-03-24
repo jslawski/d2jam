@@ -50,4 +50,9 @@ public class LevelSelectManager : MonoBehaviour
 
         levelCardComponent.SetupLevelCard(LevelList.allLevels[levelIndex]);
     }
+
+    public void ReturnToMenu()
+    {
+        SceneLoader.instance.LoadScene("MainMenu");
+    }
 }
