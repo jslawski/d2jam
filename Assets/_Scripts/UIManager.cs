@@ -158,4 +158,9 @@ public class UIManager : MonoBehaviour
     {
         SceneLoader.instance.LoadScene("LevelSelect");
     }
+
+    public void LoadNextLevel()
+    {
+        LevelList.LoadNextLevel();
+    }
 }

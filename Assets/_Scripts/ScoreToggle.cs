@@ -13,7 +13,21 @@ public class ScoreToggle : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
     [SerializeField]
     private GameObject _closeButton;
     [SerializeField]
+    private GameObject _nextLevelButton;
+    [SerializeField]
     private VerticalLayoutGroup _verticalLayoutGroup;
+
+    public void Start()
+    {
+        if (LevelList.currentLevelIndex < LevelList.allLevels.Length - 1)
+        {
+            this._nextLevelButton.SetActive(true);
+        }
+        else
+        {
+            this._nextLevelButton.SetActive(false);
+        }
+    }
 
     public void OpenPointsPanel()
     {
