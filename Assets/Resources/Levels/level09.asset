@@ -15,4 +15,4 @@ MonoBehaviour:
   levelIndex: 9
   sceneName: level09
   levelName: NINE
-  imageFileName: placeholderLevelSelectImage
+  imageFileName: 09
