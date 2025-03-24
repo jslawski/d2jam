@@ -38,6 +38,8 @@ public class Train : MonoBehaviour
     [SerializeField]
     private Color _negativeColor;
 
+    private float _maxTurnAngle = 85.0f;
+
     private void Awake()
     {
         this._rigidbody = GetComponent<Rigidbody>();
@@ -91,7 +93,9 @@ public class Train : MonoBehaviour
         Vector3 magnetizedVector = this._magnetScanner.GetMagnetizedForce();
         Vector3 engineVector = this.trainTransform.up * GlobalVariables.ENGINE_FORCE;
 
-        Vector3 finalVector = magnetizedVector + engineVector;
+        Vector3 compositeVector = magnetizedVector + engineVector;
+        Vector3 clampedDirection = this.ClampMaxAngle(compositeVector);
+        Vector3 finalVector = clampedDirection.normalized * compositeVector.magnitude;
 
         this._rigidbody.AddForce(finalVector);
 
@@ -103,6 +107,24 @@ public class Train : MonoBehaviour
         }
 
         ScoreManager.instance.IncrementTimer();
+    }
+
+    private Vector3 ClampMaxAngle(Vector3 newVector)
+    {
+        float currentAngle = Vector3.SignedAngle(this.trainTransform.up, newVector, Vector3.forward);
+
+        if (Mathf.Abs(currentAngle) <= this._maxTurnAngle)
+        {
+            return newVector;
+        }
+        else if (currentAngle < 0)
+        {
+            return (Quaternion.Euler(0.0f, 0.0f, -this._maxTurnAngle) * this.trainTransform.up);
+        }
+        else
+        {
+            return (Quaternion.Euler(0.0f, 0.0f, this._maxTurnAngle) * this.trainTransform.up);
+        }
     }
 
     private IEnumerator UpdateLineRenderer()
