@@ -144,6 +144,10 @@ public class Train : MonoBehaviour
     {
         this.DisableControls();
         this._launchField.EnableControls();
-        CollectibleManager.instance.ResetCollectibles();
+
+        if (CollectibleManager.instance != null)
+        {
+            CollectibleManager.instance.ResetCollectibles();
+        }
     }
 }

@@ -19,7 +19,6 @@ public class LeaderboardManager : MonoBehaviour
 {
     public static LeaderboardManager instance;
 
-    [HideInInspector]
     public LeaderboardEntryObject[] leaderboardEntryObjects;
 
     private Queue<LeaderboardUpdate> queuedUpdates;
@@ -31,7 +30,13 @@ public class LeaderboardManager : MonoBehaviour
     [SerializeField]
     private GameObject leaderboardObject;
 
-    private void Awake()
+    [SerializeField]
+    private GameObject leaderboardCanvas;
+
+    [SerializeField]
+    private Sprite[] leaderboardEntryBackgrounds;
+
+    public void Awake()
     {
         if (instance == null)
         {
@@ -39,12 +44,59 @@ public class LeaderboardManager : MonoBehaviour
         }
 
         this.leaderboardEntryObjects = GetComponentsInChildren<LeaderboardEntryObject>(true);
+
         this.queuedUpdates = new Queue<LeaderboardUpdate>();
+
+        this.InitializeLeaderboardEntryObjects();
+    }
+
+    private void Start()
+    {
+        this.RefreshLeaderboard(LevelList.GetCurrentLevel().sceneName);
+    }
+
+    private void InitializeLeaderboardEntryObjects()
+    {
+        for (int i = 0; i < this.leaderboardEntryObjects.Length; i++)
+        {
+            this.leaderboardEntryObjects[i].placementText.text = (i + 1).ToString();
+            //this.SetLeaderboardEntryObjectBackground(this.leaderboardEntryObjects[i], i);
+        }
+    }
+
+    private void SetLeaderboardEntryObjectBackground(LeaderboardEntryObject entryObject, int index)
+    {
+        int moddedIndex = index % 4;
+
+        switch (moddedIndex)
+        {
+            case 0:
+                entryObject.backgroundImage.sprite = this.leaderboardEntryBackgrounds[0];
+                break;
+            case 1:
+                entryObject.backgroundImage.sprite = this.leaderboardEntryBackgrounds[1];
+                break;
+            case 2:
+                entryObject.backgroundImage.sprite = this.leaderboardEntryBackgrounds[2];
+                break;
+            case 3:
+                entryObject.backgroundImage.sprite = this.leaderboardEntryBackgrounds[3];
+                break;
+            default:
+                entryObject.backgroundImage.sprite = this.leaderboardEntryBackgrounds[0];
+                break;
+        }
     }
 
     public void DisableLeaderboard()
     {
         this.leaderboardObject.SetActive(false);
+    }
+
+    public void DisplayLeaderboard()
+    {
+        this.leaderboardCanvas.SetActive(true);
+        this.RefreshLeaderboard("popsicle");
     }
 
     public void RefreshLeaderboard(string tableName)
@@ -90,8 +142,6 @@ public class LeaderboardManager : MonoBehaviour
 
     private void UpdateLeaderboardSuccess(string data)
     {
-        this.currentLeaderboardData = JsonUtility.FromJson<LeaderboardData>(data);
-        this.UpdateLeaderboardVisuals();
         this.readyToProcessUpdate = true;
     }
 
@@ -139,7 +189,7 @@ public class LeaderboardManager : MonoBehaviour
 
         for (int i = 0; i < this.currentLeaderboardData.entries.Count && i < this.leaderboardEntryObjects.Length; i++)
         {
-            this.leaderboardEntryObjects[i].UpdateEntry(this.currentLeaderboardData.entries[i].username, this.currentLeaderboardData.entries[i].value);
+            this.leaderboardEntryObjects[i].UpdateEntry(this.currentLeaderboardData.entries[i].username, this.currentLeaderboardData.entries[i].value, this.currentLeaderboardData.entries[i].placement);
         }
     }
 
@@ -147,12 +197,17 @@ public class LeaderboardManager : MonoBehaviour
     {
         for (int i = 0; i < this.leaderboardEntryObjects.Length; i++)
         {
-            this.leaderboardEntryObjects[i].UpdateEntry(string.Empty, 0);
+            this.leaderboardEntryObjects[i].UpdateEntry(string.Empty, 0, 0);
         }
     }
 
     public bool IsTopPlayer(string username)
     {
         return (this.GetTopPlayer().username == username);
+    }
+
+    public void OnCloseButtonClicked()
+    {
+        this.leaderboardCanvas.SetActive(false);
     }
 }

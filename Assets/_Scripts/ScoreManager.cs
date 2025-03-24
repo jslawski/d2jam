@@ -86,6 +86,7 @@ public class ScoreManager : MonoBehaviour
     private void UpdateSuccess(string data)
     {
         UIManager.instance.RefreshLatestHighScoreValues();
+        LeaderboardManager.instance.RefreshLeaderboard(LevelList.GetCurrentLevel().sceneName);
     }
 
     private void UpdateFailure()

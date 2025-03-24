@@ -1,15 +1,13 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
-using UnityEngine.Networking;
 
 public class LeaderboardEntryObject : MonoBehaviour
 {
+    public Image backgroundImage;
+    public TextMeshProUGUI placementText;
     public TextMeshProUGUI username;
-    [SerializeField]
-    private TextMeshProUGUI scoreText;
+    public TextMeshProUGUI scoreText;
 
     private void Start()
     {
@@ -19,16 +17,16 @@ public class LeaderboardEntryObject : MonoBehaviour
         }
     }
 
-    public void UpdateEntry(string username, float score)
+    public void UpdateEntry(string username, float score, float placement)
     {
         this.gameObject.SetActive(true);
-        
+
         if (username == "" || score == 0)
-        {            
+        {
             return;
         }
-        
+
         this.username.text = username;
         this.scoreText.text = Mathf.RoundToInt(score).ToString();
-    }    
+    }
 }
