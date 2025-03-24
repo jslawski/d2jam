@@ -13,6 +13,6 @@ MonoBehaviour:
   m_Name: level06
   m_EditorClassIdentifier: 
   levelIndex: 6
-  sceneName: JaredScene
+  sceneName: level06
   levelName: Placeholder Name
   imageFileName: placeholderLevelSelectImage

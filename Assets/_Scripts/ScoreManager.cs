@@ -16,6 +16,7 @@ public class ScoreManager : MonoBehaviour
     public float timeToComplete = 0.0f;
     public float distanceTravelled = 0.0f;
     public int collectiblesGrabbed = 0;
+    public int completionScore = 1000;    
 
     private void Awake()
     {
@@ -23,6 +24,10 @@ public class ScoreManager : MonoBehaviour
         {
             instance = this;
         }
+
+        PlayerPrefs.SetString("username", "ColeSlawski");
+
+
     }
 
     public void IncrementTimer()
@@ -40,17 +45,26 @@ public class ScoreManager : MonoBehaviour
         this.collectiblesGrabbed++;
     }
 
-    public int GetCalculatedScore()
+    public int GetTimeScore()
     {
         int timeDeduction = Mathf.RoundToInt(this.timeToComplete * this._timeMultiplier);
-        int timeScore = this._timeMaxScore - timeDeduction;
+        return (this._timeMaxScore - timeDeduction);
+    }
 
+    public int GetDistanceScore()
+    {
         int distanceDeduction = Mathf.RoundToInt(this.distanceTravelled * this._distanceMultiplier);
-        int distanceScore = this._distanceMaxScore - distanceDeduction;
+        return (this._distanceMaxScore - distanceDeduction);
+    }
 
-        int collectibleScore = this._scorePerCollectible * this.collectiblesGrabbed;
+    public int GetCollectibleScore()
+    { 
+        return (this._scorePerCollectible * this.collectiblesGrabbed);
+    }
 
-        return (timeScore + distanceScore + collectibleScore + this._scoreForFinishingLevel);
+    public int GetTotalCalculatedScore()
+    {
+        return this.GetTimeScore() + this.GetDistanceScore() + this.GetCollectibleScore();        
     }
 
     public void ResetCurrentScore()
@@ -58,5 +72,24 @@ public class ScoreManager : MonoBehaviour
         this.timeToComplete = 0.0f;
         this.distanceTravelled = 0.0f;
         this.collectiblesGrabbed = 0;
+    }
+
+    public void UpdateLatestHighScore()
+    {
+        string playerName = PlayerPrefs.GetString("username", "");
+        UpdateCabbageLeaderboardAsyncRequest request = new UpdateCabbageLeaderboardAsyncRequest(playerName, this.GetTotalCalculatedScore().ToString(), 
+                                                                                                LevelList.GetCurrentLevel().sceneName, this.UpdateSuccess, this.UpdateFailure);
+        request.Send();
+
+    }
+
+    private void UpdateSuccess(string data)
+    {
+        UIManager.instance.RefreshLatestHighScoreValues();
+    }
+
+    private void UpdateFailure()
+    {
+        Debug.LogError("Failed to update leaderboard high score");
     }
 }

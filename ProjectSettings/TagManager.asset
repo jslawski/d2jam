@@ -6,6 +6,7 @@ TagManager:
   tags:
   - Killzone
   - Collectible
+  - Goal
   layers:
   - Default
   - TransparentFX

@@ -94,9 +94,11 @@ GameObject:
   m_Component:
   - component: {fileID: 3582213424906282949}
   - component: {fileID: 2658536219400829436}
+  - component: {fileID: 4374504099024926312}
+  - component: {fileID: 8674106033609533128}
   m_Layer: 0
   m_Name: Target
-  m_TagString: Untagged
+  m_TagString: Goal
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -168,6 +170,39 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!135 &4374504099024926312
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4333249562768143291}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Radius: 0.5
+  m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &8674106033609533128
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4333249562768143291}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f0ebf0fe89012be42958d32d5f78f9e7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &6434310700991652115
 GameObject:
   m_ObjectHideFlags: 0
@@ -214,11 +249,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 012e68e8eee36284697c326838b33fd8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _rotationSpeed: 175
   _ringTransform: {fileID: 538387379454592495}
   _launcherTransform: {fileID: 4204285317754125089}
   _trainPrefab: {fileID: 548672327946260888, guid: 6903b9cd3eadf0c4f96d8b35158078c4,
     type: 3}
+  _worldTransform: {fileID: 0}
 --- !u!114 &3509271138698056957
 MonoBehaviour:
   m_ObjectHideFlags: 0

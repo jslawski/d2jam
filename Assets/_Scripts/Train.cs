@@ -71,6 +71,7 @@ public class Train : MonoBehaviour
         }
 
         ScoreManager.instance.ResetCurrentScore();
+        UIManager.instance.HideCurrentPointValues();
     }
 
     void FixedUpdate()
@@ -132,10 +133,7 @@ public class Train : MonoBehaviour
     private void OnCollisionEnter(Collision collision)
     {
         if (collision.collider.tag == "Killzone")
-        {
-            this.DisableControls();
-            this._launchField.EnableControls();
-
+        {        
             ScoreManager.instance.ResetCurrentScore();
 
             Destroy(this.gameObject);
@@ -144,6 +142,8 @@ public class Train : MonoBehaviour
 
     private void OnDestroy()
     {
+        this.DisableControls();
+        this._launchField.EnableControls();
         CollectibleManager.instance.ResetCollectibles();
     }
 }
