@@ -48,7 +48,7 @@ Material:
     m_Floats:
     - _Dither_Scale: 6.46
     - _Fresnel_Power: 5.33
-    - _Grid_Thickness: 0.92
+    - _Grid_Thickness: 0
     - _QueueControl: 0
     - _QueueOffset: 0
     - _Scroll_Speed: 1
@@ -57,7 +57,7 @@ Material:
     m_Colors:
     - _Color: {r: 0.028301895, g: 0.028301895, b: 0.028301895, a: 0}
     - _Fresnel_Color: {r: 0.13207549, g: 0.13207549, b: 0.13207549, a: 0}
-    - _Grid_Color: {r: 0.14150941, g: 0.14150941, b: 0.14150941, a: 0}
+    - _Grid_Color: {r: 0, g: 0, b: 0, a: 0}
     - _Grid_Tiling: {r: 10, g: 10, b: 0, a: 0}
     - _Light_Angle: {r: 2.63, g: 1, b: 1, a: 0}
     - _Normal_Vector: {r: 30.18, g: 122.8, b: 0, a: 0}

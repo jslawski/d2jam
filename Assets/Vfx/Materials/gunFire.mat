@@ -7,8 +7,8 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: Background
-  m_Shader: {fileID: -6465566751694194690, guid: 381e2f7a5360eac4eb92eee78e7e2483,
+  m_Name: gunFire
+  m_Shader: {fileID: -6465566751694194690, guid: 3b634a15b1955bf498694e1ec5a8bbfb,
     type: 3}
   m_Parent: {fileID: 0}
   m_ModifiedSerializedProperties: 0
@@ -49,11 +49,11 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _MainTex:
-        m_Texture: {fileID: 2800000, guid: 5386e99975f85f444bb79ab3d051ca71, type: 3}
+        m_Texture: {fileID: 2800000, guid: 296c728397f5b9840a987da26c91028f, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _Mask:
-        m_Texture: {fileID: 0}
+        m_Texture: {fileID: 2800000, guid: 692427e4b4561cc4ba20114a2ea9a693, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _MetallicGlossMap:
@@ -103,7 +103,6 @@ Material:
     - _GlossMapScale: 0
     - _Glossiness: 0
     - _GlossyReflections: 0
-    - _Mask_Power: 1
     - _Metallic: 0
     - _OcclusionStrength: 1
     - _Parallax: 0.005
@@ -120,15 +119,15 @@ Material:
     - _ZWrite: 1
     m_Colors:
     - _BaseColor: {r: 1, g: 1, b: 1, a: 1}
-    - _Color: {r: 0.46635816, g: 0.754717, b: 0.63544637, a: 1}
+    - _Color: {r: 14.963371, g: 4.010311, b: 17.350733, a: 1}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
     - _Mask_Offset: {r: 0, g: 0, b: 0, a: 0}
     - _Mask_Tiling: {r: 1, g: 1, b: 0, a: 0}
-    - _Offset: {r: 0, g: 0, b: 0, a: 0}
+    - _Scroll_Speed: {r: 0, g: 0, b: 0, a: 0}
     - _SpecColor: {r: 0.19999996, g: 0.19999996, b: 0.19999996, a: 1}
-    - _Tiling: {r: 1, g: 1, b: 0, a: 0}
+    - _Texture_Tiling: {r: 1, g: 1, b: 0, a: 0}
   m_BuildTextureStacks: []
---- !u!114 &8343728737727789801
+--- !u!114 &5347824429737526974
 MonoBehaviour:
   m_ObjectHideFlags: 11
   m_CorrespondingSourceObject: {fileID: 0}
