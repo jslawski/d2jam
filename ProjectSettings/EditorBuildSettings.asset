@@ -8,6 +8,15 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/JaredScene.unity
     guid: 99c9720ab356a0642a771bea13969a05
+  - enabled: 1
+    path: Assets/Scenes/MainMenu.unity
+    guid: 239505b427a032e4c8e201de20557343
+  - enabled: 1
+    path: Assets/Scenes/SplashScene.unity
+    guid: 5c960224cc87a5b4a9168ac88a012893
+  - enabled: 1
+    path: Assets/Scenes/LevelSelect.unity
+    guid: 63c9a296d1e43024b99565c354a36b84
   m_configObjects:
     com.unity.input.settings: {fileID: 11400000, guid: 84b3904d93acabe44bd4bf4bcdb790f8,
       type: 2}
