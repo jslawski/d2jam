@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8f187c2712056194c9acb7b59ac34fad, type: 3}
   m_Name: level03
   m_EditorClassIdentifier: 
-  levelIndex: 3
+  levelIndex: 2
   sceneName: level03
   levelName: THREE
   imageFileName: 03

@@ -71,7 +71,7 @@ public class ScoreManager : MonoBehaviour
     }
 
     public void UpdateLatestHighScore()
-    {
+    {        
         string playerName = PlayerPrefs.GetString("username", "");
         UpdateCabbageLeaderboardAsyncRequest request = new UpdateCabbageLeaderboardAsyncRequest(playerName, this.GetTotalCalculatedScore().ToString(), 
                                                                                                 LevelList.GetCurrentLevel().sceneName, this.UpdateSuccess, this.UpdateFailure);
@@ -80,8 +80,8 @@ public class ScoreManager : MonoBehaviour
 
     private void UpdateSuccess(string data)
     {
-        UIManager.instance.RefreshLatestHighScoreValues();
-        LeaderboardManager.instance.RefreshLeaderboard(LevelList.GetCurrentLevel().sceneName);
+        LeaderboardManager.instance.RefreshLeaderboard(LevelList.GetCurrentLevel().sceneName); UIManager.instance.RefreshLatestHighScoreValues();
+        UIManager.instance.RefreshLatestHighScoreValues();        
     }
 
     private void UpdateFailure()

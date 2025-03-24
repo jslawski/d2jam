@@ -144,8 +144,17 @@ public class UIManager : MonoBehaviour
 
         LeaderboardEntryData leaderboardEntry = JsonUtility.FromJson<LeaderboardEntryData>(data);
 
-        this._pbPlacement.text = leaderboardEntry.placement.ToString();
-        this._pbScore.text = leaderboardEntry.value.ToString();
+        if (leaderboardEntry.value == 0)
+        {
+            this._pbPlacement.text = "--";
+            this._pbScore.text = "--";
+        }
+        else
+        {
+            this._pbPlacement.text = leaderboardEntry.placement.ToString();
+            this._pbScore.text = leaderboardEntry.value.ToString();
+        }
+        
         this._pbUsername.text = leaderboardEntry.username;
     }
 
