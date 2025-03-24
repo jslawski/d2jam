@@ -7,7 +7,7 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: Scrolling Test
+  m_Name: OutlinePositive
   m_Shader: {fileID: -6465566751694194690, guid: 3b634a15b1955bf498694e1ec5a8bbfb,
     type: 3}
   m_Parent: {fileID: 0}
@@ -53,7 +53,7 @@ Material:
     - _Mask_Offset: {r: 0, g: -0.12, b: 0, a: 0}
     - _Mask_Tiling: {r: 1, g: 1, b: 0, a: 0}
     - _Scroll_Speed: {r: 0, g: 2, b: 0, a: 0}
-    - _Texture_Tiling: {r: 0, g: -2, b: 0, a: 0}
+    - _Texture_Tiling: {r: 0, g: 2, b: 0, a: 0}
   m_BuildTextureStacks: []
 --- !u!114 &6520175939278418490
 MonoBehaviour:
