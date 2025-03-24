@@ -24,8 +24,6 @@ public class ScoreManager : MonoBehaviour
         {
             instance = this;
         }
-
-        PlayerPrefs.SetString("username", "ColeSlawski");
     }
 
     public void IncrementTimer()
