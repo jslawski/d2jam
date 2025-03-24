@@ -36,6 +36,8 @@ public class UIManager : MonoBehaviour
 
     private bool _displayCurrentPointValues = false;
 
+    private int _lastCalculatedScore = 0;
+
     private void Awake()
     {
         if (instance == null)
@@ -94,7 +96,7 @@ public class UIManager : MonoBehaviour
         this._currentTimeScore.text = ScoreManager.instance.GetTimeScore().ToString();
         this._currentDistanceScore.text = ScoreManager.instance.GetDistanceScore().ToString();
         this._currentCollectiblesScore.text = ScoreManager.instance.GetCollectibleScore().ToString();
-        this._currentTotalScore.text = ScoreManager.instance.GetTotalCalculatedScore().ToString();
+        
 
         if (this._displayCurrentPointValues == true)
         {
@@ -102,7 +104,7 @@ public class UIManager : MonoBehaviour
             this._currentTimeScore.gameObject.SetActive(true);
             this._currentDistanceScore.gameObject.SetActive(true);
             this._currentCollectiblesScore.gameObject.SetActive(true);
-            this._currentTotalScore.gameObject.SetActive(true);
+            this._currentTotalScore.text = ScoreManager.instance.GetTotalCalculatedScore().ToString();
         }
         else
         {
@@ -110,13 +112,14 @@ public class UIManager : MonoBehaviour
             this._currentTimeScore.gameObject.SetActive(false);
             this._currentDistanceScore.gameObject.SetActive(false);
             this._currentCollectiblesScore.gameObject.SetActive(false);
-            this._currentTotalScore.gameObject.SetActive(false);
+            this._currentTotalScore.text = this._lastCalculatedScore.ToString();
         }
     }
 
     public void DisplayCurrentPointValues()
     {
         this._displayCurrentPointValues = true;
+        this._lastCalculatedScore = ScoreManager.instance.GetTotalCalculatedScore();
     }
 
     public void HideCurrentPointValues()

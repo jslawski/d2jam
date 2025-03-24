@@ -77,8 +77,7 @@ public class ScoreManager : MonoBehaviour
         string playerName = PlayerPrefs.GetString("username", "");
         UpdateCabbageLeaderboardAsyncRequest request = new UpdateCabbageLeaderboardAsyncRequest(playerName, this.GetTotalCalculatedScore().ToString(), 
                                                                                                 LevelList.GetCurrentLevel().sceneName, this.UpdateSuccess, this.UpdateFailure);
-        request.Send();
-
+        request.Send();        
     }
 
     private void UpdateSuccess(string data)

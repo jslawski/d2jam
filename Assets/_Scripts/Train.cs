@@ -38,7 +38,7 @@ public class Train : MonoBehaviour
     [SerializeField]
     private Color _negativeColor;
 
-    private float _maxTurnAngle = 75.0f;
+    private float _maxTurnAngle = 60.0f;
 
     private void Awake()
     {

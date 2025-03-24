@@ -41,13 +41,16 @@ public class MagnetScanner : MonoBehaviour
         for (int i = 0; i < this._currentMagnets.Count; i++)
         {
             Magnet magnetComponent = this.GetMagnetComponent(this._currentMagnets[i].collider.gameObject);
+
+            Vector3 noZNormal = new Vector3(this._currentMagnets[i].normal.x, this._currentMagnets[i].normal.y, 0.0f);
+
             if (GlobalVariables.CURRENT_POLARITY == magnetComponent.polarity)
             {
-                totalForceVector -= this._currentMagnets[i].normal.normalized * this.CalculateMagnetForce(this._currentMagnets[i].point);
+                totalForceVector -= noZNormal.normalized * this.CalculateMagnetForce(this._currentMagnets[i].point);
             }
             else
             {
-                totalForceVector += this._currentMagnets[i].normal.normalized * this.CalculateMagnetForce(this._currentMagnets[i].point);
+                totalForceVector += noZNormal.normalized * this.CalculateMagnetForce(this._currentMagnets[i].point);
             }            
         }
 
