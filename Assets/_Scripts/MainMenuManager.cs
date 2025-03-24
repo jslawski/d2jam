@@ -6,7 +6,7 @@ public class MainMenuManager : MonoBehaviour
 {
     public void Start()
     {
-        if (BGMManager.instance.menuBGM.volume < 1)
+        if (BGMManager.instance != null && BGMManager.instance.menuBGM.volume < 1)
         {
             BGMManager.instance.FadeToMenuBGM();
         }

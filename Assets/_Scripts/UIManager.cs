@@ -44,6 +44,11 @@ public class UIManager : MonoBehaviour
     private void Start()
     {
         this.RefreshLatestHighScoreValues();
+
+        if (BGMManager.instance != null && BGMManager.instance.gameplayBGM.volume < 1)
+        {
+            BGMManager.instance.FadeToGameplayBGM();
+        }
     }
 
     private List<int> GetTimerValues()
@@ -139,5 +144,10 @@ public class UIManager : MonoBehaviour
     {
         this._highLeaderboardPosition.text = "--";
         this._highTotalScore.text = "--";
+    }
+
+    public void ReturnToLevelSelect()
+    {
+        SceneLoader.instance.LoadScene("LevelSelect");
     }
 }

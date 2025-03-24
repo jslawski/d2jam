@@ -22,6 +22,14 @@ public class LevelSelectManager : MonoBehaviour
         this.LoadLevelsIntoScene();
     }
 
+    private void Start()
+    {
+        if (BGMManager.instance != null && BGMManager.instance.menuBGM.volume < 1)
+        {
+            BGMManager.instance.FadeToMenuBGM();
+        }
+    }
+
     private void SetupLevelList()
     {
         LevelList.SetupList(Resources.LoadAll<Level>("Levels"));
