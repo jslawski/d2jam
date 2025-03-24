@@ -36,7 +36,7 @@ public class CutsceneManager : MonoBehaviour
 
     private void Start()
     {
-        Cursor.visible = false;
+        //Cursor.visible = false;
     }
 
     #region Utility

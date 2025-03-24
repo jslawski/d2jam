@@ -31,7 +31,7 @@ public class SplashMenu : MonoBehaviour
         
         videoPlayer.started += OnVideoStarted;
 
-        Cursor.visible = false;
+        //Cursor.visible = false;
     }
 
     private void Start()

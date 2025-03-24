@@ -36,8 +36,10 @@ public class LevelCard : MonoBehaviour
         if (this._selectLevelSound != null)
         {
             AudioManager.instance.Play(this._selectLevelSound, channelSettings);
-        }
+        }        
 
-        //Load into the next scene here        
+        //Load into the next scene here
+        SceneLoader.instance.LoadScene("JaredScene");
+
     }
 }
