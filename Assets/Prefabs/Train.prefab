@@ -199,6 +199,9 @@ MonoBehaviour:
   _neutralColor: {r: 0.105882354, g: 0.5294118, b: 0.34901962, a: 1}
   _positiveColor: {r: 1, g: 0, b: 0.4, a: 1}
   _negativeColor: {r: 0.09803922, g: 0.41568628, b: 1, a: 1}
+  _crashSound: {fileID: 8300000, guid: 606196f8428872f428866fcbc96d8f96, type: 3}
+  _launchSound: {fileID: 8300000, guid: 868eb3b9cba9764499b061f1dc17a9ac, type: 3}
+  _targetReachedSound: {fileID: 8300000, guid: 5e009073e50445346af93f798714c4c7, type: 3}
 --- !u!114 &8529705462545745449
 MonoBehaviour:
   m_ObjectHideFlags: 0

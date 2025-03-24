@@ -4,6 +4,9 @@ using UnityEngine;
 
 public class Goal : MonoBehaviour
 {
+    [SerializeField]
+    private AudioClip _targetReachedSound;
+
     public void OnTriggerEnter(Collider other)
     {
         if (other.tag == "Player")
@@ -12,6 +15,9 @@ public class Goal : MonoBehaviour
 
             UIManager.instance.DisplayCurrentPointValues();
             ScoreManager.instance.UpdateLatestHighScore();
+
+            AudioChannelSettings channelSettings = new AudioChannelSettings(false, 0.8f, 1.2f, 1.0f, "SFX", this.gameObject.transform);
+            AudioManager.instance.Play(this._targetReachedSound, channelSettings);
         }
     }
 }

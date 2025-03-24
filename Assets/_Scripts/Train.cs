@@ -40,20 +40,23 @@ public class Train : MonoBehaviour
 
     private float _maxTurnAngle = 60.0f;
 
+    [SerializeField]
+    private AudioClip _crashSound;
+    [SerializeField]
+    private AudioClip _launchSound;
+
     private void Awake()
     {
         this._rigidbody = GetComponent<Rigidbody>();
         this._lineRenderer = GetComponentInChildren<LineRenderer>();
         this.trainTransform = GetComponent<Transform>();
         this._magnetScanner = GetComponent<MagnetScanner>();
-
     }
 
     public void EnableControls()
     {
         ControlsManager.AddPerformedAction(ControlsManager.GetPlayerMapActions().PositivePolarity, this.ChangeToPositive);
         ControlsManager.AddPerformedAction(ControlsManager.GetPlayerMapActions().NegativePolarity, this.ChangeToNegative);
-
     }
 
     public void DisableControls()
@@ -86,6 +89,9 @@ public class Train : MonoBehaviour
 
         ScoreManager.instance.ResetCurrentScore();
         UIManager.instance.HideCurrentPointValues();
+
+        AudioChannelSettings channelSettings = new AudioChannelSettings(false, 0.8f, 1.2f, 1.0f, "SFX", this.gameObject.transform);
+        AudioManager.instance.Play(this._launchSound, channelSettings);
     }
 
     void FixedUpdate()
@@ -178,13 +184,19 @@ public class Train : MonoBehaviour
         {        
             ScoreManager.instance.ResetCurrentScore();
 
+            AudioChannelSettings channelSettings = new AudioChannelSettings(false, 0.8f, 1.2f, 1.0f, "SFX", this.gameObject.transform);
+            AudioManager.instance.Play(this._crashSound, channelSettings);
+
             Destroy(this.gameObject);
         }
     }
 
     private void OnDestroy()
     {
-        this._tracksSpriteRenderer.color = this._neutralColor;
+        if (this._tracksSpriteRenderer == null)
+        {
+            this._tracksSpriteRenderer.color = this._neutralColor;
+        }
 
         this.DisableControls();
         this._launchField.EnableControls();        

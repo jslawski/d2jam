@@ -102,6 +102,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6fde02b83506fe649887ad48e629f0b6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _collectibleGetSound: {fileID: 8300000, guid: fd34397bb6ae5804d857ae99125c7f11,
+    type: 3}
 --- !u!95 &2403477816583366739
 Animator:
   serializedVersion: 5

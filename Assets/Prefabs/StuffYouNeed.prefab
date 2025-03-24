@@ -3403,8 +3403,33 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 3870074359256056984, guid: 1fd8407fb2825464e83fa584e5683a33,
+        type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 2441327956800823331}
   m_SourcePrefab: {fileID: 100100000, guid: 1fd8407fb2825464e83fa584e5683a33, type: 3}
+--- !u!1 &2411629524086056935 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 3870074359256056984, guid: 1fd8407fb2825464e83fa584e5683a33,
+    type: 3}
+  m_PrefabInstance: {fileID: 1495916795430724479}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &2441327956800823331
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2411629524086056935}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2292f7aca84e8a84eb4d21e687830764, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  audioChannelPrefab: {fileID: 3198527283903495338, guid: f37332798cac2a14a9600abd037437d8,
+    type: 3}
+  audioChannelCacheSize: 50
 --- !u!4 &5548535732715377467 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 6467956038896169028, guid: 1fd8407fb2825464e83fa584e5683a33,
