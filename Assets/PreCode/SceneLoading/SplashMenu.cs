@@ -56,7 +56,17 @@ public class SplashMenu : MonoBehaviour
     private IEnumerator DisplayCoroutine()
     {
         yield return new WaitForSeconds(fadeOutDelay);
-        SceneLoader.instance.LoadScene(this.nextSceneName);
+        
+        string playerName = PlayerPrefs.GetString("username", string.Empty);
+
+        if (playerName == string.Empty)
+        {
+            SceneLoader.instance.LoadScene("LoginScene");
+        }
+        else
+        {
+            SceneLoader.instance.LoadScene("MainMenu");
+        }
     }
 
     private void Update()

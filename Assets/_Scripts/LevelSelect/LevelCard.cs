@@ -40,6 +40,6 @@ public class LevelCard : MonoBehaviour
         LevelList.SetLevelIndex(this._associatedLevel.levelIndex);
 
         //Load into the next scene here
-        SceneLoader.instance.LoadScene("JaredScene");
+        SceneLoader.instance.LoadScene(this._associatedLevel.sceneName);
     }
 }
