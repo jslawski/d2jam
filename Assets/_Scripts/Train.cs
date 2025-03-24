@@ -38,7 +38,7 @@ public class Train : MonoBehaviour
     [SerializeField]
     private Color _negativeColor;
 
-    private float _maxTurnAngle = 85.0f;
+    private float _maxTurnAngle = 75.0f;
 
     private void Awake()
     {
@@ -156,7 +156,7 @@ public class Train : MonoBehaviour
     {
         GlobalVariables.CURRENT_POLARITY = Polarity.Positive;
         this._pulseMaterial.SetColor("_Color", Color.red);
-        this._sprite.color = Color.red;
+        //this._sprite.color = Color.red;
 
         this._tracksSpriteRenderer.DOKill();
         this._tracksSpriteRenderer.DOColor(this._positiveColor, 0.5f);
@@ -166,7 +166,7 @@ public class Train : MonoBehaviour
     {
         GlobalVariables.CURRENT_POLARITY = Polarity.Negative;
         this._pulseMaterial.SetColor("_Color", Color.blue);
-        this._sprite.color = Color.blue;
+        //this._sprite.color = Color.blue;
 
         this._tracksSpriteRenderer.DOKill();
         this._tracksSpriteRenderer.DOColor(this._negativeColor, 0.5f);
