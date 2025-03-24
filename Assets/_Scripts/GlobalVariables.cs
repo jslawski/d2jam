@@ -10,4 +10,6 @@ public class GlobalVariables : MonoBehaviour
     public static float MAX_VELOCITY = 7f;
 
     public static bool MOUSE_ROTATION = false;
+
+    public static bool PREVENT_SHOOTING = false;
 }

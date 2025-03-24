@@ -26,6 +26,7 @@ public class LaunchField : MonoBehaviour
     [SerializeField]
     private Transform _worldTransform;    
 
+
     private void Awake()
     {
         ControlsManager.Setup();
@@ -108,12 +109,22 @@ public class LaunchField : MonoBehaviour
 
     private void LaunchPositive(InputAction.CallbackContext context)
     {
+        if (GlobalVariables.PREVENT_SHOOTING == true)
+        {
+            return;
+        }
+
         this.GenerateTrain(Polarity.Positive);
         this.DisableControls();
     }
 
     private void LaunchNegative(InputAction.CallbackContext context)
     {
+        if (GlobalVariables.PREVENT_SHOOTING == true)
+        {
+            return;
+        }
+
         this.GenerateTrain(Polarity.Negative);
         this.DisableControls();
     }
