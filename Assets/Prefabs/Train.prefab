@@ -196,6 +196,9 @@ MonoBehaviour:
   _launchField: {fileID: 0}
   _sprite: {fileID: 4134376906050659293}
   _pulseMaterial: {fileID: 2100000, guid: 22c17fab62f2c18498bb609f380b3367, type: 2}
+  _neutralColor: {r: 0.105882354, g: 0.5294118, b: 0.34901962, a: 1}
+  _positiveColor: {r: 1, g: 0, b: 0.4, a: 1}
+  _negativeColor: {r: 0.09803922, g: 0.41568628, b: 1, a: 1}
 --- !u!114 &8529705462545745449
 MonoBehaviour:
   m_ObjectHideFlags: 0

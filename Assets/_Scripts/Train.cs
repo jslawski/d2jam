@@ -1,3 +1,4 @@
+using DG.Tweening;
 using System.Collections;
 using System.Collections.Generic;
 using System.Runtime.CompilerServices;
@@ -28,6 +29,15 @@ public class Train : MonoBehaviour
     [SerializeField]
     private Material _pulseMaterial;
 
+    private SpriteRenderer _tracksSpriteRenderer;
+
+    [SerializeField]
+    private Color _neutralColor;
+    [SerializeField]
+    private Color _positiveColor;
+    [SerializeField]
+    private Color _negativeColor;
+
     private void Awake()
     {
         this._rigidbody = GetComponent<Rigidbody>();
@@ -56,10 +66,11 @@ public class Train : MonoBehaviour
         StartCoroutine(this.UpdateLineRenderer());
     }
 
-    public void Launch(LaunchField launcher, Polarity initialPolarity)
+    public void Launch(LaunchField launcher, Polarity initialPolarity, SpriteRenderer tracksSpriteRenderer)
     {
         this._rigidbody.AddForce(this.trainTransform.up * GlobalVariables.ENGINE_FORCE);
         this._launchField = launcher;
+        this._tracksSpriteRenderer = tracksSpriteRenderer;
         this.EnableControls();
 
         if (initialPolarity == Polarity.Positive)
@@ -125,6 +136,8 @@ public class Train : MonoBehaviour
         this._pulseMaterial.SetColor("_Color", Color.red);
         this._sprite.color = Color.red;
 
+        this._tracksSpriteRenderer.DOKill();
+        this._tracksSpriteRenderer.DOColor(this._positiveColor, 0.5f);
     }
 
     private void ChangeToNegative(InputAction.CallbackContext context)
@@ -132,6 +145,9 @@ public class Train : MonoBehaviour
         GlobalVariables.CURRENT_POLARITY = Polarity.Negative;
         this._pulseMaterial.SetColor("_Color", Color.blue);
         this._sprite.color = Color.blue;
+
+        this._tracksSpriteRenderer.DOKill();
+        this._tracksSpriteRenderer.DOColor(this._negativeColor, 0.5f);
     }
 
     private void OnCollisionEnter(Collision collision)
@@ -146,8 +162,10 @@ public class Train : MonoBehaviour
 
     private void OnDestroy()
     {
+        this._tracksSpriteRenderer.color = this._neutralColor;
+
         this.DisableControls();
-        this._launchField.EnableControls();
+        this._launchField.EnableControls();        
 
         if (CollectibleManager.instance != null)
         {

@@ -24,8 +24,10 @@ public class LaunchField : MonoBehaviour
     private bool _controlsDisabled = false;
 
     [SerializeField]
-    private Transform _worldTransform;    
+    private Transform _worldTransform;
 
+    [SerializeField]
+    private SpriteRenderer _trainTracks;
 
     private void Awake()
     {
@@ -132,7 +134,7 @@ public class LaunchField : MonoBehaviour
     private void GenerateTrain(Polarity initialPolarity)
     {
         GameObject currentTrainInstance = Instantiate(this._trainPrefab, this._launcherTransform.position, this._ringTransform.rotation);
-        currentTrainInstance.GetComponent<Train>().Launch(this, initialPolarity);
+        currentTrainInstance.GetComponent<Train>().Launch(this, initialPolarity, this._trainTracks);
     }
 
     private void ResetCurrentSpeed(InputAction.CallbackContext context)

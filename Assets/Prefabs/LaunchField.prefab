@@ -74,7 +74,7 @@ SpriteRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: 4084c2205fb5f3a4e8ac7aa31ff00b74, type: 3}
-  m_Color: {r: 1, g: 0, b: 0.4, a: 1}
+  m_Color: {r: 0.105882354, g: 0.5294118, b: 0.34901962, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -20058,6 +20058,7 @@ MonoBehaviour:
   _trainPrefab: {fileID: 548672327946260888, guid: 6903b9cd3eadf0c4f96d8b35158078c4,
     type: 3}
   _worldTransform: {fileID: 0}
+  _trainTracks: {fileID: 1625258851359693030}
 --- !u!114 &3509271138698056957
 MonoBehaviour:
   m_ObjectHideFlags: 0
