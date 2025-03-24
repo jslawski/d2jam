@@ -1,5 +1,6 @@
 using UnityEngine;
 using UnityEngine.EventSystems;
+using UnityEngine.UI;
 
 public class LeaderboardToggle : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
 {
@@ -9,12 +10,16 @@ public class LeaderboardToggle : MonoBehaviour, IPointerEnterHandler, IPointerEx
     private GameObject _closeButtonObject;
     [SerializeField]
     private GameObject _openButtonObject;
+    [SerializeField]
+    private VerticalLayoutGroup _verticalLayoutGroup;
 
     public void OpenLeaderboard()
     {
         this._leaderboardObject.SetActive(true);
         this._closeButtonObject.SetActive(true);
         this._openButtonObject.SetActive(false);
+
+        this._verticalLayoutGroup.padding.bottom = -40;
     }
 
     public void CloseLeaderboard()
@@ -22,6 +27,8 @@ public class LeaderboardToggle : MonoBehaviour, IPointerEnterHandler, IPointerEx
         this._leaderboardObject.SetActive(false);
         this._closeButtonObject.SetActive(false);
         this._openButtonObject.SetActive(true);
+
+        this._verticalLayoutGroup.padding.bottom = 360;
     }
 
     public void OnPointerEnter(PointerEventData data)

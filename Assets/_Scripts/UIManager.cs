@@ -26,10 +26,13 @@ public class UIManager : MonoBehaviour
     private TextMeshProUGUI _currentCollectiblesScore;
     [SerializeField]
     private TextMeshProUGUI _currentTotalScore;
+
     [SerializeField]
-    private TextMeshProUGUI _highLeaderboardPosition;
+    private TextMeshProUGUI _pbPlacement;
     [SerializeField]
-    private TextMeshProUGUI _highTotalScore;
+    private TextMeshProUGUI _pbUsername;
+    [SerializeField]
+    private TextMeshProUGUI _pbScore;
 
     private bool _displayCurrentPointValues = false;
 
@@ -49,6 +52,8 @@ public class UIManager : MonoBehaviour
         {
             BGMManager.instance.FadeToGameplayBGM();
         }
+
+        this._pbUsername.text = PlayerPrefs.GetString("username", "--");
     }
 
     private List<int> GetTimerValues()
@@ -136,14 +141,17 @@ public class UIManager : MonoBehaviour
 
         LeaderboardEntryData leaderboardEntry = JsonUtility.FromJson<LeaderboardEntryData>(data);
 
-        this._highLeaderboardPosition.text = leaderboardEntry.placement.ToString();
-        this._highTotalScore.text = leaderboardEntry.value.ToString();
+        this._pbPlacement.text = leaderboardEntry.placement.ToString();
+        this._pbScore.text = leaderboardEntry.value.ToString();
+        this._pbUsername.text = leaderboardEntry.username;
     }
 
     private void GetDataFailure()
     {
-        this._highLeaderboardPosition.text = "--";
-        this._highTotalScore.text = "--";
+        this._pbPlacement.text = "--";
+        this._pbScore.text = "--";
+
+        this._pbUsername.text = PlayerPrefs.GetString("username", "--");
     }
 
     public void ReturnToLevelSelect()
