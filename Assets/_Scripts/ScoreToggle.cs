@@ -1,9 +1,10 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
-public class ScoreToggle : MonoBehaviour
+public class ScoreToggle : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
 {
     [SerializeField]
     private GameObject _pointsPanel;
@@ -20,7 +21,7 @@ public class ScoreToggle : MonoBehaviour
         this._moreButton.SetActive(false);
         this._closeButton.SetActive(true);
 
-        //Change padding
+        this._verticalLayoutGroup.padding.bottom = -250;
     }
 
     public void ClosePointsPanel()
@@ -29,6 +30,16 @@ public class ScoreToggle : MonoBehaviour
         this._moreButton.SetActive(true);
         this._closeButton.SetActive(false);
 
-        //Change padding
+        this._verticalLayoutGroup.padding.bottom = 0;
+    }
+
+    public void OnPointerEnter(PointerEventData data)
+    {
+        GlobalVariables.PREVENT_SHOOTING = true;
+    }
+
+    public void OnPointerExit(PointerEventData data)
+    {
+        GlobalVariables.PREVENT_SHOOTING = false;
     }
 }

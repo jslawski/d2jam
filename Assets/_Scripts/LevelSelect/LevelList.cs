@@ -44,4 +44,16 @@ public static class LevelList
 
         LevelList.currentLevelIndex = index;
     }
+
+    public static void LoadNextLevel()
+    {
+        if (LevelList.allLevels == null)
+        {
+            LevelList.SetupList(Resources.LoadAll<Level>("Levels"));
+        }
+
+        LevelList.currentLevelIndex++;
+
+        SceneLoader.instance.LoadScene(LevelList.allLevels[LevelList.currentLevelIndex].sceneName);
+    }
 }

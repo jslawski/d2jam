@@ -89,7 +89,7 @@ public class UIManager : MonoBehaviour
         this._currentTime.text = this.GetFormattedTime(ScoreManager.instance.timeToComplete);
         this._currentDistanceTraveled.text = this.GetFormattedDistance(ScoreManager.instance.distanceTravelled);
         this._currentCollectiblesCount.text = ScoreManager.instance.collectiblesGrabbed.ToString();
-
+        
         this._currentCompletionScore.text = ScoreManager.instance.completionScore.ToString();
         this._currentTimeScore.text = ScoreManager.instance.GetTimeScore().ToString();
         this._currentDistanceScore.text = ScoreManager.instance.GetDistanceScore().ToString();

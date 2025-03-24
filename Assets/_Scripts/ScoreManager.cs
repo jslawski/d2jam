@@ -26,8 +26,6 @@ public class ScoreManager : MonoBehaviour
         }
 
         PlayerPrefs.SetString("username", "ColeSlawski");
-
-
     }
 
     public void IncrementTimer()

@@ -26,7 +26,6 @@ public class LevelCard : MonoBehaviour
 
         //Try to grab player's leaderboard stats here.  If nothing exists, then mark the level as "unbeaten"
         //If it does exist, then update the player's leaderboard position and score
-
     }
 
     public void SelectLevel()
@@ -36,10 +35,11 @@ public class LevelCard : MonoBehaviour
         if (this._selectLevelSound != null)
         {
             AudioManager.instance.Play(this._selectLevelSound, channelSettings);
-        }        
+        }
+
+        LevelList.SetLevelIndex(this._associatedLevel.levelIndex);
 
         //Load into the next scene here
         SceneLoader.instance.LoadScene("JaredScene");
-
     }
 }
