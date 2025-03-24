@@ -12,4 +12,6 @@ public class GlobalVariables : MonoBehaviour
     public static bool MOUSE_ROTATION = false;
 
     public static bool PREVENT_SHOOTING = false;
+
+    public static Polarity CURRENT_POLARITY = Polarity.Positive;
 }

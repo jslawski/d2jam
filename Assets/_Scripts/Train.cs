@@ -15,8 +15,6 @@ public class Train : MonoBehaviour
 
     private MagnetScanner _magnetScanner;
 
-    public Polarity currentPolarity = Polarity.Positive;
-
     private int _currentPositionIndex = 0;
 
     private float _timeBetweenVertices = 0.02f;
@@ -26,6 +24,9 @@ public class Train : MonoBehaviour
 
     [SerializeField]
     private SpriteRenderer _sprite;
+
+    [SerializeField]
+    private Material _pulseMaterial;
 
     private void Awake()
     {
@@ -120,13 +121,16 @@ public class Train : MonoBehaviour
 
     private void ChangeToPositive(InputAction.CallbackContext context)
     {
-        this.currentPolarity = Polarity.Positive;
+        GlobalVariables.CURRENT_POLARITY = Polarity.Positive;
+        this._pulseMaterial.SetColor("_Color", Color.red);
         this._sprite.color = Color.red;
+
     }
 
     private void ChangeToNegative(InputAction.CallbackContext context)
     {
-        this.currentPolarity = Polarity.Negative;
+        GlobalVariables.CURRENT_POLARITY = Polarity.Negative;
+        this._pulseMaterial.SetColor("_Color", Color.blue);
         this._sprite.color = Color.blue;
     }
 
