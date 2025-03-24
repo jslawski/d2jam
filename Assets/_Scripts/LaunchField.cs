@@ -29,6 +29,9 @@ public class LaunchField : MonoBehaviour
     [SerializeField]
     private SpriteRenderer _trainTracks;
 
+    [SerializeField]
+    private ParticleSystem _fireParticles;
+
     private void Awake()
     {
         ControlsManager.Setup();
@@ -118,6 +121,8 @@ public class LaunchField : MonoBehaviour
 
         this.GenerateTrain(Polarity.Positive);
         this.DisableControls();
+
+        this._fireParticles.Play();
     }
 
     private void LaunchNegative(InputAction.CallbackContext context)
@@ -129,6 +134,8 @@ public class LaunchField : MonoBehaviour
 
         this.GenerateTrain(Polarity.Negative);
         this.DisableControls();
+
+        this._fireParticles.Play();
     }
 
     private void GenerateTrain(Polarity initialPolarity)
