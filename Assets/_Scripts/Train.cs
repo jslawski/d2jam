@@ -109,17 +109,17 @@ public class Train : MonoBehaviour
         {
             finalVector = this.GetLatchedVelocityDirection();
         }
-        /*
+        
         if (finalVector == Vector3.forward)
         {
             Debug.LogError("Unlatch");
             this.Unlatch();
         }
-        */
+        
         if (this.latchedMagnet != null)
         {
             this._rigidbody.velocity = finalVector.normalized * GlobalVariables.MAX_VELOCITY;
-            //this.trainTransform.up = this._rigidbody.velocity.normalized;
+            this.trainTransform.up = this._rigidbody.velocity.normalized;
 
             Debug.LogError("Latched Mode");
         }
@@ -300,21 +300,21 @@ public class Train : MonoBehaviour
         RaycastHit hitInfo2 = new RaycastHit();
         bool raycastResult2 = Physics.Raycast(this.trainTransform.position, cross2, out hitInfo2, GlobalVariables.RAYCAST_DISTANCE, this._magnetLayerMask);
 
-        Debug.LogError("Result1: " + raycastResult1 + "\nResult2: " + raycastResult2);
+        //Debug.LogError("Result1: " + raycastResult1 + "\nResult2: " + raycastResult2);
 
         if (raycastResult1 == true && hitInfo1.collider.gameObject == this.latchedMagnet)
         {
-            Debug.LogError("RESULT 1");
+            //Debug.LogError("RESULT 1");
             return Vector3.Cross(Vector3.forward, hitInfo1.normal).normalized;
         }
         else if (raycastResult2 == true && hitInfo2.collider.gameObject == this.latchedMagnet)
         {
-            Debug.LogError("RESULT 2");
+            //Debug.LogError("RESULT 2");
             return Vector3.Cross(-Vector3.forward, hitInfo2.normal).normalized;
         }
         else
         {
-            Debug.LogError("FALLBACK");
+            //Debug.LogError("FALLBACK");
             return Vector3.forward;
         }
     }
