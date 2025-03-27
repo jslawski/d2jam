@@ -107,7 +107,7 @@ public class Train : MonoBehaviour
         
         if (this.latchedMagnet != null)
         {
-            finalVector = Vector3.zero;//this.GetLatchedVelocityDirection();
+            finalVector = this.GetLatchedVelocityDirection();
         }
         /*
         if (finalVector == Vector3.forward)
@@ -248,7 +248,7 @@ public class Train : MonoBehaviour
         Vector3 cross1 = Vector3.Cross(Vector3.forward, xyNormal).normalized;
         Vector3 cross2 = Vector3.Cross(xyNormal, Vector3.forward).normalized;
 
-        Debug.LogError("Train Rotation Z: " + this.trainTransform.rotation.eulerAngles.z);
+        //Debug.LogError("Train Rotation Z: " + this.trainTransform.rotation.eulerAngles.z);
 
         //Debug.LogError("Cross1: " + cross1 + "\nCross2: " + cross2);
 
@@ -300,16 +300,21 @@ public class Train : MonoBehaviour
         RaycastHit hitInfo2 = new RaycastHit();
         bool raycastResult2 = Physics.Raycast(this.trainTransform.position, cross2, out hitInfo2, GlobalVariables.RAYCAST_DISTANCE, this._magnetLayerMask);
 
+        Debug.LogError("Result1: " + raycastResult1 + "\nResult2: " + raycastResult2);
+
         if (raycastResult1 == true && hitInfo1.collider.gameObject == this.latchedMagnet)
         {
+            Debug.LogError("RESULT 1");
             return Vector3.Cross(Vector3.forward, hitInfo1.normal).normalized;
         }
         else if (raycastResult2 == true && hitInfo2.collider.gameObject == this.latchedMagnet)
         {
-            return Vector3.Cross(Vector3.forward, hitInfo2.normal).normalized;
+            Debug.LogError("RESULT 2");
+            return Vector3.Cross(-Vector3.forward, hitInfo2.normal).normalized;
         }
         else
         {
+            Debug.LogError("FALLBACK");
             return Vector3.forward;
         }
     }
