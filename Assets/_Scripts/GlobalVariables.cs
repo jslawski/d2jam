@@ -14,4 +14,6 @@ public class GlobalVariables : MonoBehaviour
     public static bool PREVENT_SHOOTING = false;
 
     public static Polarity CURRENT_POLARITY = Polarity.Positive;
+
+    public static float TRAIN_SPEED = 5.0f;
 }

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UIElements;
 
-public class MagnetScanner : MonoBehaviour
+public class NewMagnetScanner : MonoBehaviour
 {
     [SerializeField]
     private AnimationCurve _forceCurve;
@@ -49,7 +49,7 @@ public class MagnetScanner : MonoBehaviour
         }
 
         return totalForceVector;
-    }
+    }    
 
     private Magnet GetMagnetComponent(GameObject magnetObject)
     {

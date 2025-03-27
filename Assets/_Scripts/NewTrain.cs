@@ -2,12 +2,11 @@ using DG.Tweening;
 using System.Collections;
 using System.Collections.Generic;
 using System.Runtime.CompilerServices;
-using UnityEditor.PackageManager;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.SceneManagement;
 
-public class Train : MonoBehaviour
+public class NewTrain : MonoBehaviour
 {
     private Rigidbody _rigidbody;
 
@@ -39,7 +38,7 @@ public class Train : MonoBehaviour
     [SerializeField]
     private Color _negativeColor;
 
-    private float _maxTurnAngle = 60.0f;
+    private float _maxTurnAngle = 90.0f;
 
     [SerializeField]
     private AudioClip _crashSound;
@@ -103,36 +102,26 @@ public class Train : MonoBehaviour
 
     void FixedUpdate()
     {
-        Vector3 finalVector = Vector3.zero;
-        
-        if (this.latchedMagnet != null)
-        {
-            finalVector = Vector3.zero;//this.GetLatchedVelocityDirection();
-        }
-        /*
-        if (finalVector == Vector3.forward)
-        {
-            Debug.LogError("Unlatch");
-            this.Unlatch();
-        }
-        */
-        if (this.latchedMagnet != null)
-        {
-            this._rigidbody.velocity = finalVector.normalized * GlobalVariables.MAX_VELOCITY;
-            //this.trainTransform.up = this._rigidbody.velocity.normalized;
+        Vector3 finalVector = this.trainTransform.up * GlobalVariables.TRAIN_SPEED;
 
-            Debug.LogError("Latched Mode");
+        if (this.latchedMagnet != null)
+        {
+            //Do latched movement logic
+            finalVector = Vector3.zero;
         }
         else
         {
             Vector3 magnetizedVector = this._magnetScanner.GetMagnetizedForce();
-            Vector3 engineVector = this.trainTransform.up * GlobalVariables.ENGINE_FORCE;
+            Vector3 engineVector = this.trainTransform.up * GlobalVariables.TRAIN_SPEED;
 
             Vector3 compositeVector = magnetizedVector + engineVector;
-            Vector3 clampedDirection = this.ClampMaxAngle(compositeVector);
-            finalVector = clampedDirection.normalized * compositeVector.magnitude;
+            Vector3 clampedDirection = compositeVector;// this.ClampMaxAngle(compositeVector);
+
+            finalVector = clampedDirection.normalized * GlobalVariables.TRAIN_SPEED;
 
             this._rigidbody.AddForce(finalVector);
+
+            //this._rigidbody.velocity = finalVector;
 
             this.trainTransform.up = this._rigidbody.velocity.normalized;
 
@@ -155,10 +144,12 @@ public class Train : MonoBehaviour
         }
         else if (currentAngle < 0)
         {
+            Debug.LogError("CLAMPED!");
             return (Quaternion.Euler(0.0f, 0.0f, -this._maxTurnAngle) * this.trainTransform.up);
         }
         else
         {
+            Debug.LogError("CLAMPED!");
             return (Quaternion.Euler(0.0f, 0.0f, this._maxTurnAngle) * this.trainTransform.up);
         }
     }
@@ -195,11 +186,6 @@ public class Train : MonoBehaviour
 
         this._tracksSpriteRenderer.DOKill();
         this._tracksSpriteRenderer.DOColor(this._positiveColor, 0.5f);
-
-        if (this.latchedMagnet != null)
-        {
-            this.Unlatch();
-        }
     }
 
     private void ChangeToNegative(InputAction.CallbackContext context)
@@ -209,11 +195,6 @@ public class Train : MonoBehaviour
 
         this._tracksSpriteRenderer.DOKill();
         this._tracksSpriteRenderer.DOColor(this._negativeColor, 0.5f);
-
-        if (this.latchedMagnet != null)
-        {
-            this.Unlatch();
-        }
     }
 
     private void OnCollisionEnter(Collision collision)
@@ -234,84 +215,24 @@ public class Train : MonoBehaviour
         }
     }
 
-    private void Unlatch()
-    {
-        this.latchedMagnet = null;
-    }
-
     private void LatchToMagnet(GameObject latchedMagnet, Collision collisionInfo)
     {
         this.latchedMagnet = latchedMagnet;
 
-        Vector3 xyNormal = new Vector3(collisionInfo.GetContact(0).normal.x, collisionInfo.GetContact(0).normal.y, 0.0f);
+        //this.trainTransform.position = collisionInfo.GetContact(0).point + (collisionInfo.GetContact(0).normal * collisionInfo.GetContact(0).separation);
 
-        Vector3 cross1 = Vector3.Cross(Vector3.forward, xyNormal).normalized;
-        Vector3 cross2 = Vector3.Cross(xyNormal, Vector3.forward).normalized;
+        Debug.LogError(Vector3.SignedAngle(this.trainTransform.up, collisionInfo.GetContact(0).normal, Vector3.forward));
 
-        Debug.LogError("Train Rotation Z: " + this.trainTransform.rotation.eulerAngles.z);
-
-        //Debug.LogError("Cross1: " + cross1 + "\nCross2: " + cross2);
-
-        float dot1 = Vector3.Dot(this.trainTransform.up, cross1);
-        float dot2 = Vector3.Dot(this.trainTransform.up, cross2);
-
-        //Debug.LogError("Dot1: " + dot1 + "\nDot2: " + dot2);
-
-        if (dot1 > dot2)
-        {
-            //Debug.LogError("Cross1");
-            float angle = this.trainTransform.rotation.eulerAngles.z - Vector3.SignedAngle(this.trainTransform.up, cross1, -Vector3.forward);//(Mathf.Acos(dot1) * Mathf.Rad2Deg);
-
-            //Debug.LogError("Angle: " + angle);
-
-            this.trainTransform.rotation = Quaternion.Euler(0.0f, 0.0f, angle);
-        }
-        else
-        {
-            //Debug.LogError("Cross2");
-
-            float angle = this.trainTransform.rotation.eulerAngles.z - Vector3.SignedAngle(this.trainTransform.up, cross2, -Vector3.forward);//(Mathf.Acos(dot1) * Mathf.Rad2Deg);
-
-            //Debug.LogError("Angle: " + angle);
-            
-            this.trainTransform.rotation = Quaternion.Euler(0.0f, 0.0f, angle);
-        }       
+        this.trainTransform.up = Vector3.Cross(Vector3.forward, collisionInfo.GetContact(0).normal).normalized;
     }
 
     public Vector3 GetLatchedMagnetNormal()
     {
         RaycastHit hitInfo = new RaycastHit();
 
-
-
         bool raycastResult = Physics.Raycast(this.trainTransform.position, this.trainTransform.up, out hitInfo, GlobalVariables.RAYCAST_DISTANCE, this._magnetLayerMask);
 
         return Vector3.zero;
-    }
-
-    public Vector3 GetLatchedVelocityDirection()
-    {
-        Vector3 cross1 = Vector3.Cross(Vector3.forward, this.trainTransform.up).normalized;
-        Vector3 cross2 = Vector3.Cross(this.trainTransform.up, Vector3.forward).normalized;
-
-        RaycastHit hitInfo1 = new RaycastHit();
-        bool raycastResult1 = Physics.Raycast(this.trainTransform.position, cross1, out hitInfo1, GlobalVariables.RAYCAST_DISTANCE, this._magnetLayerMask);
-
-        RaycastHit hitInfo2 = new RaycastHit();
-        bool raycastResult2 = Physics.Raycast(this.trainTransform.position, cross2, out hitInfo2, GlobalVariables.RAYCAST_DISTANCE, this._magnetLayerMask);
-
-        if (raycastResult1 == true && hitInfo1.collider.gameObject == this.latchedMagnet)
-        {
-            return Vector3.Cross(Vector3.forward, hitInfo1.normal).normalized;
-        }
-        else if (raycastResult2 == true && hitInfo2.collider.gameObject == this.latchedMagnet)
-        {
-            return Vector3.Cross(Vector3.forward, hitInfo2.normal).normalized;
-        }
-        else
-        {
-            return Vector3.forward;
-        }
     }
 
     private void OnDestroy()
@@ -330,3 +251,35 @@ public class Train : MonoBehaviour
         }
     }
 }
+
+/*
+ void FixedUpdate()
+    {
+        if (this.latchedMagnet != null)
+        {
+            //Do latched movement logic
+            Vector3 finalVector = this.trainTransform.up * GlobalVariables.TRAIN_SPEED;
+            finalVector = Vector3.zero;
+        }
+        else
+        {
+            Vector3 magnetizedVector = this._magnetScanner.GetMagnetizedForce();
+            Vector3 engineVector = this.trainTransform.up * GlobalVariables.ENGINE_FORCE;
+
+            Vector3 compositeVector = magnetizedVector + engineVector;
+            Vector3 clampedDirection = this.ClampMaxAngle(compositeVector);
+            Vector3 finalVector = clampedDirection.normalized * compositeVector.magnitude;
+
+            this._rigidbody.AddForce(finalVector);
+
+            this.trainTransform.up = this._rigidbody.velocity.normalized;
+
+            if (this._rigidbody.velocity.magnitude > GlobalVariables.MAX_VELOCITY)
+            {
+                this._rigidbody.velocity = this._rigidbody.velocity.normalized * GlobalVariables.MAX_VELOCITY;
+            }
+        }
+
+        ScoreManager.instance.IncrementTimer();
+    }
+ */ 
