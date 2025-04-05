@@ -92,6 +92,8 @@ public class Train : MonoBehaviour
 
         AudioChannelSettings channelSettings = new AudioChannelSettings(false, 0.8f, 1.2f, 1.0f, "SFX", this.gameObject.transform);
         AudioManager.instance.Play(this._launchSound, channelSettings);
+
+        ControlsManager.currentTrain = this;
     }
 
     void FixedUpdate()
@@ -181,14 +183,18 @@ public class Train : MonoBehaviour
     private void OnCollisionEnter(Collision collision)
     {
         if (collision.collider.tag == "Killzone")
-        {        
-            ScoreManager.instance.ResetCurrentScore();
-
+        {                
             AudioChannelSettings channelSettings = new AudioChannelSettings(false, 0.8f, 1.2f, 1.0f, "SFX", this.gameObject.transform);
             AudioManager.instance.Play(this._crashSound, channelSettings);
 
-            Destroy(this.gameObject);
+            this.ResetLevel();
         }
+    }
+
+    public void ResetLevel()
+    {
+        ScoreManager.instance.ResetCurrentScore();
+        Destroy(this.gameObject);
     }
 
     private void OnDestroy()

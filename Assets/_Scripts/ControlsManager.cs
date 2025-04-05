@@ -1,9 +1,13 @@
+using Unity.VisualScripting;
+using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.SceneManagement;
 
 public static class ControlsManager
 {
     private static PlayerControls playerControls;
+
+    public static Train currentTrain;
 
     public static void Setup()
     {
@@ -40,6 +44,11 @@ public static class ControlsManager
 
     private static void RestartLevel(InputAction.CallbackContext context)
     {
-        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+        if (ControlsManager.currentTrain != null)
+        {
+            ControlsManager.currentTrain.ResetLevel();
+        }
+
+        ControlsManager.currentTrain = null;
     }
 }
